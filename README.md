@@ -1,6 +1,10 @@
 # Pet Adoption Connect  - Capstone Project
 ---
 
+## Introduction
+
+Welcome to Pet Adoption Connect, your one-stop-shop where pet adopters can match with pet owners looking to rehome their furry friends. Our website is designed to make the process of adopting a pet as seamless and stress-free as possible.
+
 ## User Stories
 As a user, I want to be able to:
 
