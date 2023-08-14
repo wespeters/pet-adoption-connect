@@ -17,7 +17,7 @@ Additionally, the website might also have a section for pet rescue organizations
 
 ## Entity Relationship Diagram
 
-![Entity Relationship Diagram](/Images/Pet Adoption Connect.png)
+![Entity Relationship Diagram](/Images/Pet%20Adoption%20Connect.png)
 
 ## Wireframes
 
