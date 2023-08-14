@@ -21,11 +21,11 @@ Additionally, the website might also have a section for pet rescue organizations
 
 ## Wireframes
 
-![Alt text](image-1.png)
-![Alt text](image.png)
-![Alt text](image-2.png)
-![Alt text](image-3.png)
-![Alt text](image-4.png)
+![Alt text](/Images/image-1.png)
+![Alt text](/Images/image.png)
+![Alt text](/Images/image-2.png)
+![Alt text](/Images/image-3.png)
+![Alt text](/Images/image-4.png)
 
 ---
 
