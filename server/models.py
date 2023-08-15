@@ -1,6 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
-from config import db
+from extensions import db
 from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, DateTime, TIMESTAMP
 from flask_login import UserMixin
 from sqlalchemy.orm import validates
@@ -30,6 +30,11 @@ class User(db.Model, SerializerMixin, UserMixin):
         assert re.search("[a-z]", password), "Password must contain at least one lowercase letter."
         assert re.search("[0-9]", password), "Password must contain at least one number."
         return password
+    
+    @validates('role')
+    def validate_role(self, key, role):
+        assert role in ['owner', 'adopter'], "Role must be either 'owner' or 'adopter'."
+        return role
 
     def is_active(self):
         return True

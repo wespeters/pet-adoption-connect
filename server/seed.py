@@ -8,7 +8,7 @@ from datetime import datetime
 from faker import Faker
 
 # Local imports
-from config import app
+from app import app
 from models import db, User, Pet, Message, Appointment, Organization, Resource
 
 if __name__ == '__main__':
@@ -35,29 +35,67 @@ if __name__ == '__main__':
         db.session.add_all(organizations)
 
         # Creating Users
-        users = [User(
-            username=fake.user_name(),
-            password=fake.password(),
-            email=fake.email(),
-            role=rc(['admin', 'user']),
-            contactinfo=fake.phone_number(),
-            organization_id=rc(organizations).organization_id
-        ) for _ in range(10)]
+        owners = []
+        adopters = []
+        generated_usernames = set()
+        for _ in range(50):
+            role = rc(['owner', 'adopter'])
+
+            # Ensure unique and valid-length username
+            username = fake.user_name()
+            while username in generated_usernames or len(username) < 5 or len(username) > 20:
+                username = fake.user_name()[:20]  # Truncate if necessary
+                if len(username) < 5:
+                    username = username.ljust(5, '0')  # Pad with zeros if too short
+            generated_usernames.add(username)
+
+            user = User(
+                username=username,
+                password=fake.password(),
+                email=fake.email(),
+                role=role,
+                contactinfo=fake.phone_number(),
+                organization_id=rc(organizations).organization_id
+            )
+            if role == 'owner':
+                owners.append(user)
+            else:
+                adopters.append(user)
+
+        users = owners + adopters
         db.session.add_all(users)
 
+        # Commit users to the database
+        db.session.commit()
+
+        # Track generated pet_ids
+        generated_pet_ids = set()
+
         # Creating Pets
-        pets = [Pet(
-            pet_id=str(randint(1000, 9999)),
-            petname=fake.first_name(),
-            species=rc(['Dog', 'Cat']),
-            breed=fake.last_name(),
-            age=str(randint(1, 15)),
-            gender=rc(['Male', 'Female']),
-            medical_conditions=fake.text(),
-            status=rc(['Available', 'Adopted']),
-            owner_id=rc(users).user_id,
-            organization_id=rc(organizations).organization_id
-        ) for _ in range(20)]
+        pets = []
+        for _ in range(20):
+            pet_id = str(randint(1000, 9999))
+
+            # Ensure unique pet_id
+            while pet_id in generated_pet_ids:
+                pet_id = str(randint(1000, 9999))
+
+            generated_pet_ids.add(pet_id)
+
+            pet = Pet(
+                pet_id=pet_id,
+                petname=fake.first_name(),
+                species=rc(['Dog', 'Cat']),
+                breed=fake.last_name(),
+                age=str(randint(1, 15)),
+                gender=rc(['Male', 'Female']),
+                medical_conditions=fake.text(),
+                status=rc(['Available', 'Adopted']),
+                owner_id=rc(users).user_id,
+                organization_id=rc(organizations).organization_id
+            )
+            pets.append(pet)
+
         db.session.add_all(pets)
 
         # Creating Messages
@@ -74,7 +112,7 @@ if __name__ == '__main__':
         appointments = [Appointment(
             appointment_id=str(randint(1000, 9999)),
             pet_id=rc(pets).pet_id,
-            adopter_id=rc(users).user_id,
+            adopter_id=rc(adopters).user_id, # Use adopters list here
             date_time=datetime.utcnow(),
             status=rc(['Scheduled', 'Completed'])
         ) for _ in range(15)]
