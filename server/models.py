@@ -2,9 +2,11 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from config import db
 from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, DateTime, TIMESTAMP
-from flask_login import Usermixin
+from flask_login import UserMixin
+from sqlalchemy.orm import validates
+import re
 
-class User(db.Model, SerializerMixin, Usermixin):
+class User(db.Model, SerializerMixin, UserMixin):
     __tablename__ = 'users'
     user_id = Column(Integer, primary_key=True)
     username = Column(String)
@@ -13,8 +15,21 @@ class User(db.Model, SerializerMixin, Usermixin):
     role = Column(String)
     contactinfo = Column(String)
     organization_id = Column(Integer, ForeignKey('organizations.organization_id'))
-    organization = db.relationship('Organization', backref='users')
+    organization = db.relationship('Organization', backref='users', foreign_keys=[organization_id])
     authenticated = Column(Boolean, default=False)
+
+    @validates('username')
+    def validate_username(self, key, username):
+        assert 5 <= len(username) <= 20, "Username must be between 5 and 20 characters long."
+        return username
+
+    @validates('password')
+    def validate_password(self, key, password):
+        assert len(password) >= 8, "Password must be at least 8 characters long."
+        assert re.search("[A-Z]", password), "Password must contain at least one uppercase letter."
+        assert re.search("[a-z]", password), "Password must contain at least one lowercase letter."
+        assert re.search("[0-9]", password), "Password must contain at least one number."
+        return password
 
     def is_active(self):
         return True
@@ -76,4 +91,3 @@ class Resource(db.Model, SerializerMixin):
     author = Column(String)
     category = Column(String)  # E.g., "adoption tips," "preparation guide," etc.
     created_at = Column(TIMESTAMP)
-
