@@ -12,6 +12,8 @@ class User(db.Model, SerializerMixin, Usermixin):
     email = Column(String)
     role = Column(String)
     contactinfo = Column(String)
+    organization_id = Column(Integer, ForeignKey('organizations.organization_id'))
+    organization = db.relationship('Organization', backref='users')
     authenticated = Column(Boolean, default=False)
 
     def is_active(self):
@@ -63,7 +65,8 @@ class Organization(db.Model, SerializerMixin):
     description = Column(String)
     location = Column(String)
     website = Column(String)
-    pets = db.relationship('Pet', backref='organization', lazy=True)  # Association with pets
+    admin_id = Column(Integer, ForeignKey('users.user_id'))  
+    pets = db.relationship('Pet', backref='organization', lazy=True)  
 
 class Resource(db.Model, SerializerMixin):
     __tablename__ = 'resources'
