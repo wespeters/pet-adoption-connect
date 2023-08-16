@@ -18,6 +18,10 @@ class User(db.Model, SerializerMixin, UserMixin):
     organization = db.relationship('Organization', backref='users', foreign_keys=[organization_id])
     authenticated = Column(Boolean, default=False)
 
+    serialize_rules = (
+        '-organization.users',  # Exclude users from the organization during serialization
+    )
+
     @validates('username')
     def validate_username(self, key, username):
         assert 5 <= len(username) <= 20, "Username must be between 5 and 20 characters long."
@@ -58,8 +62,14 @@ class Pet(db.Model, SerializerMixin):
     gender = Column(String)
     medical_conditions = Column(String)
     status = Column(String)
+    image_url = Column(String)
     owner_id = Column(Integer, ForeignKey('users.user_id'))
     organization_id = Column(Integer, ForeignKey('organizations.organization_id'))
+
+    serialize_rules = (
+        '-owner.organization', # Exclude organization from the owner during serialization
+        '-organization.pets',  # Exclude pets from the organization during serialization
+    )
 
 class Message(db.Model, SerializerMixin):
     __tablename__ = 'messages'
@@ -69,6 +79,11 @@ class Message(db.Model, SerializerMixin):
     content = Column(String)
     time = Column(TIMESTAMP)
 
+    serialize_rules = (
+        '-sender.organization',  # Exclude organization from the sender during serialization
+        '-receiver.organization', # Exclude organization from the receiver during serialization
+    )
+
 class Appointment(db.Model, SerializerMixin):
     __tablename__ = 'appointments'
     appointment_id = Column(String, primary_key=True)
@@ -76,6 +91,10 @@ class Appointment(db.Model, SerializerMixin):
     adopter_id = Column(Integer, ForeignKey('users.user_id'))
     date_time = Column(DateTime)
     status = Column(String)
+
+    serialize_rules = (
+        '-adopter.organization', # Exclude organization from the adopter during serialization
+    )
 
 class Organization(db.Model, SerializerMixin):
     __tablename__ = 'organizations'
@@ -86,9 +105,14 @@ class Organization(db.Model, SerializerMixin):
     location = Column(String)
     website = Column(String)
     admin_id = Column(Integer, ForeignKey('users.user_id'))  
-    pets = db.relationship('Pet', backref='organization', lazy=True)  
+    pets = db.relationship('Pet', backref='organization', lazy=True)
 
-class Resource(db.Model, SerializerMixin):
+    serialize_rules = (
+        '-admin.organization', # Exclude organization from the admin during serialization
+        '-pets.organization',   # Exclude organization from the pets during serialization
+    )  
+
+class AppResource(db.Model, SerializerMixin):
     __tablename__ = 'resources'
     resource_id = Column(Integer, primary_key=True)
     title = Column(String)
@@ -96,3 +120,4 @@ class Resource(db.Model, SerializerMixin):
     author = Column(String)
     category = Column(String)  # E.g., "adoption tips," "preparation guide," etc.
     created_at = Column(TIMESTAMP)
+

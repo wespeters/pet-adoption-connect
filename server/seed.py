@@ -82,6 +82,8 @@ if __name__ == '__main__':
 
             generated_pet_ids.add(pet_id)
 
+            image_url = f"https://example.com/images/{pet_id}.jpg"
+
             pet = Pet(
                 pet_id=pet_id,
                 petname=fake.first_name(),
@@ -92,7 +94,8 @@ if __name__ == '__main__':
                 medical_conditions=fake.text(),
                 status=rc(['Available', 'Adopted']),
                 owner_id=rc(users).user_id,
-                organization_id=rc(organizations).organization_id
+                organization_id=rc(organizations).organization_id,
+                image_url=image_url
             )
             pets.append(pet)
 
