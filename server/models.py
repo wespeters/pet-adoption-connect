@@ -1,14 +1,15 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from extensions import db
-from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, DateTime, TIMESTAMP
+from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, DateTime, TIMESTAMP, func
 from flask_login import UserMixin
 from sqlalchemy.orm import validates
+from datetime import datetime
 import re
 
 class User(db.Model, SerializerMixin, UserMixin):
     __tablename__ = 'users'
-    user_id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String)
     password = Column(String)
     email = Column(String)
@@ -50,11 +51,11 @@ class User(db.Model, SerializerMixin, UserMixin):
         return False
 
     def get_id(self):
-        return str(self.user_id)
+        return self.user_id
 
 class Pet(db.Model, SerializerMixin):
     __tablename__ = 'pets'
-    pet_id = Column(String, primary_key=True)
+    pet_id = Column(Integer, primary_key=True, autoincrement=True)
     petname = Column(String)
     species = Column(String)
     breed = Column(String)
@@ -73,11 +74,11 @@ class Pet(db.Model, SerializerMixin):
 
 class Message(db.Model, SerializerMixin):
     __tablename__ = 'messages'
-    message_id = Column(String, primary_key=True)
+    message_id = Column(Integer, primary_key=True, autoincrement=True)
     sender_id = Column(Integer, ForeignKey('users.user_id'))
     receiver_id = Column(Integer, ForeignKey('users.user_id'))
     content = Column(String)
-    time = Column(TIMESTAMP)
+    time = Column(DateTime, default=datetime.utcnow, nullable=False)
 
     serialize_rules = (
         '-sender.organization',  # Exclude organization from the sender during serialization
@@ -86,10 +87,10 @@ class Message(db.Model, SerializerMixin):
 
 class Appointment(db.Model, SerializerMixin):
     __tablename__ = 'appointments'
-    appointment_id = Column(String, primary_key=True)
+    appointment_id = Column(Integer, primary_key=True, autoincrement=True)
     pet_id = Column(String, ForeignKey('pets.pet_id'))
     adopter_id = Column(Integer, ForeignKey('users.user_id'))
-    date_time = Column(DateTime)
+    date_time = Column(DateTime, nullable=True)
     status = Column(String)
 
     serialize_rules = (
@@ -98,7 +99,7 @@ class Appointment(db.Model, SerializerMixin):
 
 class Organization(db.Model, SerializerMixin):
     __tablename__ = 'organizations'
-    organization_id = Column(Integer, primary_key=True)
+    organization_id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     contact_info = Column(String)
     description = Column(String)
@@ -114,7 +115,7 @@ class Organization(db.Model, SerializerMixin):
 
 class AppResource(db.Model, SerializerMixin):
     __tablename__ = 'resources'
-    resource_id = Column(Integer, primary_key=True)
+    resource_id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String)
     content = Column(String)
     author = Column(String)

@@ -4,6 +4,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
+from datetime import datetime
 from config import *
 from extensions import db
 from models import *
@@ -108,7 +109,7 @@ class Messages(Resource):
         message = Message.query.get_or_404(id)
         db.session.delete(message)
         db.session.commit()
-        return '', 204
+        return 'message deleted', 204
 
 class Appointments(Resource):
     def get(self, id=None):
@@ -121,6 +122,11 @@ class Appointments(Resource):
 
     def post(self):
         data = request.get_json()
+        
+        # Convert the date_time string to a datetime object
+        if 'date_time' in data:
+            data['date_time'] = datetime.strptime(data['date_time'], "%Y-%m-%dT%H:%M")
+        
         appointment = Appointment(**data)
         db.session.add(appointment)
         db.session.commit()
