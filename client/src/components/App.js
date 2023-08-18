@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from './Home';
 
 function App() {
-  return <h1>Phase 4 Project Client</h1>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={<Home/>} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
