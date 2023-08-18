@@ -5,6 +5,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from datetime import datetime
+from sqlalchemy.sql.expression import func
 from config import *
 from extensions import db
 from models import *
@@ -80,6 +81,15 @@ class Pets(Resource):
         db.session.delete(pet)
         db.session.commit()
         return '', 204
+
+class FeaturedPets(Resource):
+    def get(self):
+        try:
+            pets = Pet.query.filter_by(status='Available').order_by(func.random()).limit(4).all()
+            return [pet.to_dict() for pet in pets], 200
+        except Exception as e:
+            app.logger.error(f"An error occurred while fetching featured pets: {str(e)}")
+            return {"message": "An error occurred while fetching featured pets"}, 500
 
 class Messages(Resource):
     def get(self, id=None):
@@ -211,6 +221,7 @@ class Resources(Resource):
 # Add the resources to the API
 api.add_resource(Users, '/users', '/users/<int:id>')
 api.add_resource(Pets, '/pets', '/pets/<int:id>')
+api.add_resource(FeaturedPets, '/pets/featured')
 api.add_resource(Messages, '/messages', '/messages/<int:id>')
 api.add_resource(Appointments, '/appointments', '/appointments/<int:id>')
 api.add_resource(Organizations, '/organizations', '/organizations/<int:id>')
