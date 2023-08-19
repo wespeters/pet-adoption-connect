@@ -58,10 +58,10 @@ function Home({ loggedInUser, setLoggedInUser }) {
   };
 
   return (
-    <>
-        <div className="dark-mode-toggle-container">
-          <DarkModeToggle />
-        </div>
+        <div className="container">
+            <div className="dark-mode-toggle-container">
+                <DarkModeToggle />
+            </div>
         <div>
             <h1>Welcome to Pet Adoption Connect</h1>
             <div className="login-section">
@@ -135,7 +135,8 @@ function Home({ loggedInUser, setLoggedInUser }) {
                       </div>
                   </div>
               </div>
-          </div></>
+          </div>
+        </div>
   );
 }
 

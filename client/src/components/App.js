@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import NavBar from './NavBar';
 import Home from './Home';
 import PetDetail from './PetDetail';
 import Messages from "./Messages";
@@ -18,9 +19,15 @@ function App() {
     }
   }, [loggedInUser]);
 
+  const handleLogout = () => {
+    setLoggedInUser(null);
+    sessionStorage.removeItem('loggedInUser');
+  };
+
   return (
     <DarkModeProvider>
       <BrowserRouter>
+        <NavBar loggedInUser={loggedInUser} handleLogout={handleLogout} /> {/* Use NavBar */}
         <Routes>
           <Route path="/" element={<Home loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />} />
           <Route path="/pets/:id" element={<PetDetail/>} />

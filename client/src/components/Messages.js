@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import DarkModeToggle from './DarkModeToggle';
 
 function Messages({ loggedInUser }) {
   const [inbox, setInbox] = useState([]);
@@ -70,7 +71,10 @@ function Messages({ loggedInUser }) {
   }
 
   return (
-    <div>
+    <div className="container">
+            <div className="dark-mode-toggle-container">
+                <DarkModeToggle />
+            </div>
       <h2>Inbox</h2>
       {inbox.map((message) => (
         <div key={message.message_id}>

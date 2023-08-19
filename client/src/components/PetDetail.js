@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom"; // Import useParams
+import DarkModeToggle from './DarkModeToggle';
 
 function PetDetail() {
   const [pet, setPet] = useState({});
@@ -14,6 +15,10 @@ function PetDetail() {
   }, [id]); // Add id as a dependency
 
   return (
+    <div className="container">
+            <div className="dark-mode-toggle-container">
+                <DarkModeToggle />
+            </div>
     <div className="pet-detail">
       <img src={pet.image_url} alt={pet.petname} />
       <h2>{pet.petname}</h2>
@@ -24,6 +29,7 @@ function PetDetail() {
       <p>Medical Conditions: {pet.medical_conditions}</p>
       <p>Status: {pet.status}</p>
       {/* Add more details as needed */}
+    </div>
     </div>
   );
 }
