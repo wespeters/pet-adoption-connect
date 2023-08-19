@@ -4,13 +4,35 @@ import DarkModeToggle from './DarkModeToggle';
 import { Link } from "react-router-dom"
 
 
-function Home() {
+function Home({ loggedInUser, setLoggedInUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Handle login logic here
+    try {
+      const response = await axios.post('http://localhost:5555/users/login', {
+        username,
+        password,
+      });
+
+      if (response.data.status === 'success') {
+        // Save logged-in user
+        setLoggedInUser(response.data.user);
+        sessionStorage.setItem('loggedInUser', JSON.stringify(response.data.user));
+        console.log('Login successful:', response.data.user);
+      }
+    } catch (err) {
+      setError('Invalid credentials. Please try again.');
+    }
+  };
+
+  const handleLogout = () => {
+    setLoggedInUser(null);
+    setUsername("");
+    setPassword("");
+    sessionStorage.removeItem('loggedInUser'); 
   };
 
   const [featuredPets, setFeaturedPets] = useState([]);
@@ -35,28 +57,37 @@ function Home() {
     // You may make an API call to filter the pets based on the selected criteria
   };
 
-
   return (
-    <><div className="dark-mode-toggle-container">
+    <>
+        <div className="dark-mode-toggle-container">
           <DarkModeToggle />
-      </div>
-      <div>
-              <h1>Welcome to Pet Adoption Connect</h1>
-              <div className="login-section">
-                  <h2>Login</h2>
-                  <form onSubmit={handleLogin}>
-                      <input
-                          type="text"
-                          placeholder="Username"
-                          value={username}
-                          onChange={(e) => setUsername(e.target.value)} />
-                      <input
-                          type="password"
-                          placeholder="Password"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)} />
-                      <button className='task-button'type="submit">Login</button>
-                  </form>
+        </div>
+        <div>
+            <h1>Welcome to Pet Adoption Connect</h1>
+            <div className="login-section">
+                <h2>Login</h2>
+                {loggedInUser ? (
+                    <>
+                        <p>Logged in as {loggedInUser.username}</p>
+                        <button className='task-button' onClick={handleLogout}>Logout</button>
+                        <Link to="/messages">View Message Inbox</Link>
+                    </>
+                ) : (
+                    <form onSubmit={handleLogin}>
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)} />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)} />
+                    <button className='task-button' type="submit">Login</button>
+                    </form>
+                )}
+                {error && <div className="error-message">{error}</div>}
               </div>
               <div className="intro-text">
                   <p>Find your perfect pet companion here!</p>

@@ -79,6 +79,18 @@ class Message(db.Model, SerializerMixin):
     receiver_id = Column(Integer, ForeignKey('users.user_id'))
     content = Column(String)
     time = Column(DateTime, default=datetime.utcnow, nullable=False)
+    
+    def to_dict_with_usernames(self):
+        sender = User.query.get(self.sender_id)
+        receiver = User.query.get(self.receiver_id)
+        return {
+            'message_id': self.message_id,
+            'sender_username': sender.username if sender else "Unknown",
+            'receiver_username': receiver.username if receiver else "Unknown",
+            'content': self.content,
+            'time': self.time.isoformat() if self.time else None
+        }
+
 
     serialize_rules = (
         '-sender.organization',  # Exclude organization from the sender during serialization

@@ -16,7 +16,8 @@ app.config.from_object('config')
 db.init_app(app)
 migrate = Migrate(app, db)
 api = Api(app)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+
 
 @app.route('/')
 def index():
@@ -51,6 +52,36 @@ class Users(Resource):
         db.session.delete(user)
         db.session.commit()
         return '', 204
+    
+class UserLogin(Resource):
+    def post(self):
+        username = request.json.get('username')
+        password = request.json.get('password')
+
+        user = User.query.filter_by(username=username).first()
+
+        if user and user.password == password: # Note: Passwords should be hashed in production.
+            response = {
+                'status': 'success',
+                'message': 'Login successful',
+                'user': {
+                    'username': user.username,
+                    'role': user.role,
+                    'user_id': user.user_id
+                }
+            }
+            return response, 200
+        else:
+            response = {
+                'status': 'error',
+                'message': 'Invalid credentials'
+            }
+            return response, 401
+        
+class UserByUsername(Resource):
+    def get(self, username):
+        user = User.query.filter_by(username=username).first_or_404()
+        return {'user_id': user.user_id}, 200
 
 class Pets(Resource):
     def get(self, id=None):
@@ -93,16 +124,33 @@ class FeaturedPets(Resource):
 
 class Messages(Resource):
     def get(self, id=None):
-        if id:
-            message = Message.query.get_or_404(id)
-            return message.to_dict(), 200
+        sender_id = request.args.get('sender_id')
+        receiver_id = request.args.get('receiver_id')
+
+        if sender_id:
+            messages = Message.query.filter_by(sender_id=sender_id).all()
+        elif receiver_id:
+            messages = Message.query.filter_by(receiver_id=receiver_id).all()
         else:
             messages = Message.query.all()
-            return [message.to_dict() for message in messages], 200
+
+        return [message.to_dict_with_usernames() for message in messages], 200
+
 
     def post(self):
         data = request.get_json()
-        message = Message(**data)
+        print("Received data:", data)
+
+        # Validate that required keys are present
+        required_keys = ['sender_id', 'receiver_id', 'content']
+        for key in required_keys:
+            if key not in data:
+                return {'message': f'Missing required field: {key}'}, 400
+
+        sender_id = data['sender_id']
+        receiver_id = data['receiver_id']
+        content = data['content']
+        message = Message(sender_id=sender_id, receiver_id=receiver_id, content=content)
         db.session.add(message)
         db.session.commit()
         return message.to_dict(), 201
@@ -220,6 +268,8 @@ class Resources(Resource):
 
 # Add the resources to the API
 api.add_resource(Users, '/users', '/users/<int:id>')
+api.add_resource(UserLogin, '/users/login')
+api.add_resource(UserByUsername, '/users/username/<string:username>')
 api.add_resource(Pets, '/pets', '/pets/<int:id>')
 api.add_resource(FeaturedPets, '/pets/featured')
 api.add_resource(Messages, '/messages', '/messages/<int:id>')
