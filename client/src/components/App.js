@@ -30,7 +30,7 @@ function App() {
         <NavBar loggedInUser={loggedInUser} handleLogout={handleLogout} /> {/* Use NavBar */}
         <Routes>
           <Route path="/" element={<Home loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />} />
-          <Route path="/pets/:id" element={<PetDetail/>} />
+          <Route path="/pets/:id" element={<PetDetail />} />
           <Route path="/messages" element={<Messages loggedInUser={loggedInUser} />} />
         </Routes>
       </BrowserRouter>

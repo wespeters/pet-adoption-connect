@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import DarkModeToggle from './DarkModeToggle';
 
 function Messages({ loggedInUser }) {
   const [inbox, setInbox] = useState([]);
@@ -31,7 +30,7 @@ function Messages({ loggedInUser }) {
         return null;
       });
   };
-  
+
 
   const sendMessage = async (recipientUsername) => {
     console.log('Logged-in user:', loggedInUser);
@@ -42,21 +41,21 @@ function Messages({ loggedInUser }) {
         receiver_id: receiverId,
         content: content,
       })
-      .then(() => {
-        setContent("");
-        setRecipient("");
-        setShowCompose(false);
-      })
-      .catch((error) => {
-        // Handle the error and display the message
-        console.error("Error sending message:", error.response.data.message);
-      });
+        .then(() => {
+          setContent("");
+          setRecipient("");
+          setShowCompose(false);
+        })
+        .catch((error) => {
+          // Handle the error and display the message
+          console.error("Error sending message:", error.response.data.message);
+        });
     } else {
       // Handle error (e.g., show an error message)
     }
   };
-  
-  
+
+
   const handleCompose = () => {
     setShowCompose(true);
   };
@@ -72,17 +71,16 @@ function Messages({ loggedInUser }) {
 
   return (
     <div className="container">
-            <div className="dark-mode-toggle-container">
-                <DarkModeToggle />
-            </div>
       <h2>Inbox</h2>
+      <div className="message-container">
       {inbox.map((message) => (
-        <div key={message.message_id}>
+        <div key={message.message_id} className="message">
           <p>From: {message.sender_username}</p>
           <p>{message.content}</p>
           <button onClick={() => handleReply(message.sender_username)}>Reply</button>
         </div>
       ))}
+      </div>
       <button onClick={handleCompose}>Compose a new message</button>
       {showCompose && (
         <div>
@@ -101,12 +99,14 @@ function Messages({ loggedInUser }) {
         </div>
       )}
       <h2>Sent Messages</h2>
+      <div className="message-container">
       {sentMessages.map((message) => (
-        <div key={message.message_id}>
+        <div key={message.message_id} className="message">
           <p>To: {message.receiver_username}</p>
           <p>{message.content}</p>
         </div>
       ))}
+    </div>
     </div>
   );
 }

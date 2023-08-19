@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 
 :root {
@@ -6,7 +6,7 @@
   --header: #2b6cb0; 
   --link: #4299e1; 
   --text: #4a5568; 
-  --font-family: 'Poppins', sans-serif; 
+  --font-family: 'Quicksand', sans-serif; 
 }
 
 [data-theme='dark'] {
@@ -35,6 +35,7 @@ a {
 h1, h2, h3, h4, h5, h6 {
   color: var(--header);
   transition: all 0.5s;
+  text-align: center;
 }
 
 main {
@@ -253,6 +254,19 @@ button {
   margin-top: 1rem;
 }
 
+.message {
+  text-align: left;
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.message-container {
+  text-align: left;
+  width: 100%;
+}
+
 .navbar-link {
   line-height: 1rem;
   width:7rem;
@@ -293,4 +307,12 @@ button {
 
 .navbar-link:hover {
   background-color: #1C84FF;
+}
+
+.pet-card {
+  border: 1px solid #e0e0e0; /* Border style */
+  padding: 10px; /* Internal spacing */
+  margin: 10px; /* External spacing */
+  border-radius: 5px; /* Optional: Rounded corners */
+  text-align: center; /* Center align the text */
 }

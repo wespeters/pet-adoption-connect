@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import DarkModeToggle from './DarkModeToggle'; // Import DarkModeToggle
 import './NavBar.css';
 
 function NavBar({ loggedInUser, handleLogout }) {
@@ -7,6 +8,9 @@ function NavBar({ loggedInUser, handleLogout }) {
         <div className="navbar">
             <div className='navbar-title'>
                 <h1>Pet Adoption Connect</h1>
+            </div>
+            <div className="dark-mode-toggle-container">
+                <DarkModeToggle /> {/* Render DarkModeToggle */}
             </div>
             <div className='navbar-links'>
                 <Link to="/">Home</Link>
