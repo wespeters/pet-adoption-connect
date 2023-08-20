@@ -113,6 +113,15 @@ class Pets(Resource):
         db.session.commit()
         return '', 204
 
+class AvailablePets(Resource):
+    def get(self):
+        try:
+            pets = Pet.query.filter_by(status='Available').all()
+            return [pet.to_dict() for pet in pets], 200
+        except Exception as e:
+            app.logger.error(f"An error occurred while fetching available pets: {str(e)}")
+            return {"message": "An error occurred while fetching available pets"}, 500
+
 class FeaturedPets(Resource):
     def get(self):
         try:
@@ -271,6 +280,7 @@ api.add_resource(Users, '/users', '/users/<int:id>')
 api.add_resource(UserLogin, '/users/login')
 api.add_resource(UserByUsername, '/users/username/<string:username>')
 api.add_resource(Pets, '/pets', '/pets/<int:id>')
+api.add_resource(AvailablePets, '/pets/available')
 api.add_resource(FeaturedPets, '/pets/featured')
 api.add_resource(Messages, '/messages', '/messages/<int:id>')
 api.add_resource(Appointments, '/appointments', '/appointments/<int:id>')
