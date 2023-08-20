@@ -23,6 +23,7 @@ function NavBar({ loggedInUser, handleLogout }) {
                 <Link to="/">Home</Link>
                 <Link to="/post" onClick={handlePostNewPet}>Post a New Pet</Link>
                 <Link to="pets/available">View All Available Pets</Link>
+                <Link to="/resources">Resources for Pet Adopters</Link>
                 {loggedInUser ? (
                     <>
                         <Link to="/messages">View Message Inbox</Link>

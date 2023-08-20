@@ -102,7 +102,7 @@ function Home({ loggedInUser, setLoggedInUser }) {
             </Link>
           ))}
           <div className="search-pets">
-            <h2>Search Pets</h2>
+            <h2>Search Available Pets</h2>
             <div className="search-container">
               <select
                 value={searchCriteria.species}

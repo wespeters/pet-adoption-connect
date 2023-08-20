@@ -19,7 +19,7 @@
   .navbar-links {
     display: flex;
     gap: 15px;
-    font-size: 1.1rem;
+    font-size: 0.85rem;
     align-items: left;
   }
   
