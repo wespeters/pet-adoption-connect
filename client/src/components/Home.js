@@ -65,8 +65,7 @@ function Home({ loggedInUser, setLoggedInUser }) {
           {loggedInUser ? (
             <>
               <p>Logged in as {loggedInUser.username}</p>
-              <button className='task-button' onClick={handleLogout}>Logout</button>
-              <Link to="/messages">View Message Inbox</Link>
+              <p><Link to="/messages">View Message Inbox</Link></p>
             </>
           ) : (
             <form onSubmit={handleLogin}>
