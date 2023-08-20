@@ -330,6 +330,10 @@ button {
   background-color: #1C84FF;
 }
 
+.available-pets-container {
+  width: 100%;
+}
+
 .pet-card {
   border: 1px solid #e0e0e0; /* Border style */
   padding: 10px; /* Internal spacing */
@@ -344,4 +348,14 @@ button {
   padding: 10px;
   margin: 10px 0;
   border-radius: 5px;
+}
+
+textarea[name="medical_conditions"] {
+  width: 100%; /* or any specific width you prefer */
+  min-height: 50px; /* or any specific height you prefer */
+  resize: vertical; /* allows vertical resizing */
+}
+
+input[name="image_url"] {
+  width: 100%; /* or any specific width you prefer */
 }

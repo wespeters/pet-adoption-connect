@@ -51,8 +51,13 @@ function Post({ loggedInUser }) {
                 <input type="text" name="breed" placeholder="Breed" required onChange={handleChange} />
                 <input type="text" name="age" placeholder="Age" required onChange={handleChange} />
                 <input type="text" name="gender" placeholder="Gender" required onChange={handleChange} />
-                <input type="text" name="medical_conditions" placeholder="Medical Conditions (enter 'None' if none)" required onChange={handleChange} />
-                <input type="text" name="image_url" placeholder="Photo of your pet (paste image URL here):" required onChange={handleChange} />
+                <textarea
+                    name="medical_conditions"
+                    placeholder="Medical Conditions (enter 'None' if none)"
+                    required
+                    onChange={handleChange}
+                />
+                 <input type="text" name="image_url" placeholder="Photo of your pet (paste image URL here):" required onChange={handleChange} />
                 <button type="submit">Submit</button>
             </form>
         </div>
