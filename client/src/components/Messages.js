@@ -69,26 +69,43 @@ function Messages({ loggedInUser }) {
     return <div>You must be logged in to use this feature.</div>;
   }
 
+  const handleDeleteMessage = (messageId) => {
+    // Confirm with the user before deleting
+    if (window.confirm("Are you sure you want to delete this message?")) {
+      axios
+        .delete(`http://localhost:5555/messages/${messageId}`)
+        .then(() => {
+          // Refresh the inbox by removing the deleted message
+          setInbox(inbox.filter((message) => message.message_id !== messageId));
+          alert('Message deleted successfully!');
+        })
+        .catch((error) => {
+          console.error("Error deleting message:", error);
+          alert('An error occurred while deleting the message. Please try again.');
+        });
+    }
+  };
+
   return (
     <div className="container">
       <button onClick={handleCompose}>Compose a new message</button>
       {showCompose && (
-  <div className="compose-container">
-    <input
-      type="text"
-      placeholder="Recipient Username"
-      value={recipient}
-      onChange={(e) => setRecipient(e.target.value)}
-    />
-    <textarea
-      className="message-content-textarea" // Add a specific class to this textarea
-      value={content}
-      onChange={(e) => setContent(e.target.value)}
-      placeholder="Message Content"
-    ></textarea>
-    <button onClick={() => sendMessage(recipient)}>Send</button>
-  </div>
-)}
+        <div className="compose-container">
+          <input
+            type="text"
+            placeholder="Recipient Username"
+            value={recipient}
+            onChange={(e) => setRecipient(e.target.value)}
+          />
+          <textarea
+            className="message-content-textarea" // Add a specific class to this textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Message Content"
+          ></textarea>
+          <button onClick={() => sendMessage(recipient)}>Send</button>
+        </div>
+      )}
 
       <h2>Inbox</h2>
       <div className="message-container">
@@ -97,6 +114,7 @@ function Messages({ loggedInUser }) {
             <p>From: {message.sender_username}</p>
             <p>{message.content}</p>
             <button onClick={() => handleReply(message.sender_username)}>Reply</button>
+            <button onClick={() => handleDeleteMessage(message.message_id)}>Delete</button>
           </div>
         ))}
       </div>
@@ -111,7 +129,7 @@ function Messages({ loggedInUser }) {
       </div>
     </div>
   );
-  
+
 }
 
 export default Messages;
