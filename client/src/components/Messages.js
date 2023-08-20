@@ -71,44 +71,47 @@ function Messages({ loggedInUser }) {
 
   return (
     <div className="container">
-      <h2>Inbox</h2>
-      <div className="message-container">
-      {inbox.map((message) => (
-        <div key={message.message_id} className="message">
-          <p>From: {message.sender_username}</p>
-          <p>{message.content}</p>
-          <button onClick={() => handleReply(message.sender_username)}>Reply</button>
-        </div>
-      ))}
-      </div>
       <button onClick={handleCompose}>Compose a new message</button>
       {showCompose && (
-        <div>
-          <input
-            type="text"
-            placeholder="Recipient Username"
-            value={recipient}
-            onChange={(e) => setRecipient(e.target.value)}
-          />
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Message Content"
-          ></textarea>
-          <button onClick={() => sendMessage(recipient)}>Send</button>
-        </div>
-      )}
+  <div className="compose-container">
+    <input
+      type="text"
+      placeholder="Recipient Username"
+      value={recipient}
+      onChange={(e) => setRecipient(e.target.value)}
+    />
+    <textarea
+      className="message-content-textarea" // Add a specific class to this textarea
+      value={content}
+      onChange={(e) => setContent(e.target.value)}
+      placeholder="Message Content"
+    ></textarea>
+    <button onClick={() => sendMessage(recipient)}>Send</button>
+  </div>
+)}
+
+      <h2>Inbox</h2>
+      <div className="message-container">
+        {inbox.map((message) => (
+          <div key={message.message_id} className="message">
+            <p>From: {message.sender_username}</p>
+            <p>{message.content}</p>
+            <button onClick={() => handleReply(message.sender_username)}>Reply</button>
+          </div>
+        ))}
+      </div>
       <h2>Sent Messages</h2>
       <div className="message-container">
-      {sentMessages.map((message) => (
-        <div key={message.message_id} className="message">
-          <p>To: {message.receiver_username}</p>
-          <p>{message.content}</p>
-        </div>
-      ))}
-    </div>
+        {sentMessages.map((message) => (
+          <div key={message.message_id} className="message">
+            <p>To: {message.receiver_username}</p>
+            <p>{message.content}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
+  
 }
 
 export default Messages;

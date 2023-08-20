@@ -47,6 +47,25 @@ main {
   display: flex;
   justify-content: flex-end;
   width: 100%;
+  padding-right: 20px;
+}
+
+.compose-container {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  align-items: center;
+}
+
+.compose-container .message-content-textarea {
+  display: block;
+  text-align: left;
+  width: 100%;
+  height: 100px;
+  margin: 0 auto 10px; /* Center horizontally and add margin at the bottom */
+  resize: both; /* Allow resizing both horizontally and vertically */
 }
 
 .container {
@@ -265,7 +284,7 @@ button {
 
 .message-container {
   text-align: left;
-  width: 100%;
+  width: auto;
 }
 
 .navbar-link {
