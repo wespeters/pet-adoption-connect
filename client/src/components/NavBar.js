@@ -4,6 +4,13 @@ import DarkModeToggle from './DarkModeToggle'; // Import DarkModeToggle
 import './NavBar.css';
 
 function NavBar({ loggedInUser, handleLogout }) {
+    const handlePostNewPet = (e) => {
+        if (!loggedInUser || loggedInUser.role !== 'owner') {
+            alert('You must be registered and logged in as an owner to post a new pet.');
+            e.preventDefault(); // Prevent the link from navigating
+        }
+    };
+
     return (
         <div className="navbar">
             <div className='navbar-title'>
@@ -14,6 +21,7 @@ function NavBar({ loggedInUser, handleLogout }) {
             </div>
             <div className='navbar-links'>
                 <Link to="/">Home</Link>
+                <Link to="/post" onClick={handlePostNewPet}>Post a New Pet</Link>
                 {loggedInUser ? (
                     <>
                         <Link to="/messages">View Message Inbox</Link>

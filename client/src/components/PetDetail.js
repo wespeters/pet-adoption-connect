@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom"; // Import useParams
+import { useParams } from "react-router-dom";
 
-function PetDetail() {
+function PetDetail({ loggedInUser }) {
   const [pet, setPet] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
+  const [updateValues, setUpdateValues] = useState({});
   const { id } = useParams(); // Destructure id from useParams
 
   useEffect(() => {
@@ -12,6 +14,30 @@ function PetDetail() {
       setPet(response.data);
     });
   }, [id]); // Add id as a dependency
+
+  const handleUpdateChange = (e) => {
+    const { name, value } = e.target;
+    setUpdateValues(prevValues => ({
+      ...prevValues,
+      [name]: value
+    }));
+  };
+
+  const handleUpdateSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.patch(`http://localhost:5555/pets/${id}`, updateValues);
+      alert('Pet updated successfully!');
+      setIsEditing(false);
+      // Refresh pet details
+      axios.get(`http://localhost:5555/pets/${id}`).then((response) => {
+        setPet(response.data);
+      });
+    } catch (err) {
+      console.error('Error updating pet:', err);
+      alert('An error occurred while updating the pet. Please try again.');
+    }
+  };
 
   return (
     <div className="container">
@@ -26,6 +52,18 @@ function PetDetail() {
         <p>Status: {pet.status}</p>
         {/* Add more details as needed */}
       </div>
+      {loggedInUser && loggedInUser.user_id === pet.owner_id && !isEditing && (
+        <button onClick={() => setIsEditing(true)}>Update Pet Details</button>
+      )}
+      {isEditing && (
+        <form onSubmit={handleUpdateSubmit}>
+          <input type="text" name="petname" placeholder="Pet's Name" defaultValue={pet.petname} onChange={handleUpdateChange} />
+          <input type="text" name="status" placeholder="Status" defaultValue={pet.status} onChange={handleUpdateChange} />
+          {/* Add other input fields as needed */}
+          <button type="submit">Submit</button>
+          <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
+        </form>
+      )}
     </div>
   );
 }
