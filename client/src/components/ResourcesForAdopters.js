@@ -12,7 +12,7 @@ function ResourcesForAdopters() {
   }, []);
 
   return (
-    <div className="resources-container">
+    <div className="container">
       <h1>Resources for Pet Adopters</h1>
       {resources.map(resource => (
         <Link to={`/resources/${resource.resource_id}`} key={resource.resource_id} className="resource-item">
