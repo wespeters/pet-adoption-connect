@@ -284,7 +284,8 @@ button {
 
 .message-container {
   text-align: left;
-  width: auto;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .navbar-link {

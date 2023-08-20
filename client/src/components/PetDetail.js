@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function PetDetail({ loggedInUser }) {
   const [pet, setPet] = useState({});
@@ -39,6 +39,21 @@ function PetDetail({ loggedInUser }) {
     }
   };
 
+  const navigate = useNavigate();
+  
+  const handleDeletePet = async () => {
+    if (window.confirm('Are you sure you want to delete this pet?')) {
+      try {
+        await axios.delete(`http://localhost:5555/pets/${id}`);
+        alert('Pet deleted successfully!');
+        navigate('/');
+      } catch (err) {
+        console.error('Error deleting pet:', err);
+        alert('An error occurred while deleting the pet. Please try again.');
+      }
+    }
+  };
+
   return (
     <div className="container">
       <div className="pet-detail">
@@ -53,7 +68,10 @@ function PetDetail({ loggedInUser }) {
         {/* Add more details as needed */}
       </div>
       {loggedInUser && loggedInUser.user_id === pet.owner_id && !isEditing && (
-        <button onClick={() => setIsEditing(true)}>Update Pet Details</button>
+        <>
+          <button onClick={() => setIsEditing(true)}>Update Pet Details</button>
+          <button onClick={handleDeletePet}>Delete Pet</button> {/* Delete Pet button */}
+        </>
       )}
       {isEditing && (
         <form onSubmit={handleUpdateSubmit}>
