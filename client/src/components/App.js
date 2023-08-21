@@ -8,6 +8,7 @@ import Messages from "./Messages";
 import Post from "./Post";
 import ResourcesForAdopters from './ResourcesForAdopters';
 import ResourceDetail from "./ResourceDetail";
+import Search from "./Search";
 import { DarkModeProvider } from '../contexts/DarkModeContext';
 
 function App() {
@@ -30,9 +31,10 @@ function App() {
   return (
     <DarkModeProvider>
       <BrowserRouter>
-        <NavBar loggedInUser={loggedInUser} handleLogout={handleLogout} /> {/* Use NavBar */}
+        <NavBar loggedInUser={loggedInUser} handleLogout={handleLogout} />
         <Routes>
           <Route path="/" element={<Home loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/pets/:id" element={<PetDetail loggedInUser={loggedInUser} />} />
           <Route path="/pets/available" element={<AvailablePets />} />
           <Route path="/messages" element={<Messages loggedInUser={loggedInUser} />} />

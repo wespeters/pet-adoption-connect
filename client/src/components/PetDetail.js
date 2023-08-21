@@ -6,14 +6,13 @@ function PetDetail({ loggedInUser }) {
   const [pet, setPet] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [updateValues, setUpdateValues] = useState({});
-  const { id } = useParams(); // Destructure id from useParams
+  const { id } = useParams();
 
   useEffect(() => {
-    // Use id directly here
     axios.get(`http://localhost:5555/pets/${id}`).then((response) => {
       setPet(response.data);
     });
-  }, [id]); // Add id as a dependency
+  }, [id]);
 
   const handleUpdateChange = (e) => {
     const { name, value } = e.target;
@@ -29,7 +28,6 @@ function PetDetail({ loggedInUser }) {
       await axios.patch(`http://localhost:5555/pets/${id}`, updateValues);
       alert('Pet updated successfully!');
       setIsEditing(false);
-      // Refresh pet details
       axios.get(`http://localhost:5555/pets/${id}`).then((response) => {
         setPet(response.data);
       });
@@ -65,7 +63,6 @@ function PetDetail({ loggedInUser }) {
         <p>Gender: {pet.gender}</p>
         <p>Medical Conditions: {pet.medical_conditions}</p>
         <p>Status: {pet.status}</p>
-        {/* Add more details as needed */}
       </div>
       {loggedInUser && loggedInUser.user_id === pet.owner_id && !isEditing && (
         <>

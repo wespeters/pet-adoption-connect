@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom'; // Import useParams
+import { useParams } from 'react-router-dom';
 
 function ResourceDetail() {
   const [resource, setResource] = useState(null);
 
-  // Destructure resource_id from the useParams hook
   const { resource_id } = useParams();
 
   useEffect(() => {

@@ -47,7 +47,6 @@ function Messages({ loggedInUser }) {
           setShowCompose(false);
         })
         .catch((error) => {
-          // Handle the error and display the message
           console.error("Error sending message:", error.response.data.message);
         });
     } else {
@@ -98,7 +97,7 @@ function Messages({ loggedInUser }) {
             onChange={(e) => setRecipient(e.target.value)}
           />
           <textarea
-            className="message-content-textarea" // Add a specific class to this textarea
+            className="message-content-textarea"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Message Content"

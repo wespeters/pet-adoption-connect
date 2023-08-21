@@ -17,7 +17,6 @@ function Home({ loggedInUser, setLoggedInUser }) {
       });
 
       if (response.data.status === 'success') {
-        // Save logged-in user
         setLoggedInUser(response.data.user);
         sessionStorage.setItem('loggedInUser', JSON.stringify(response.data.user));
         console.log('Login successful:', response.data.user);
@@ -25,13 +24,6 @@ function Home({ loggedInUser, setLoggedInUser }) {
     } catch (err) {
       setError('Invalid credentials. Please try again.');
     }
-  };
-
-  const handleLogout = () => {
-    setLoggedInUser(null);
-    setUsername("");
-    setPassword("");
-    sessionStorage.removeItem('loggedInUser');
   };
 
   const [featuredPets, setFeaturedPets] = useState([]);
@@ -45,22 +37,22 @@ function Home({ loggedInUser, setLoggedInUser }) {
   }, []);
 
   const [searchCriteria, setSearchCriteria] = useState({
+    petname: "",
     species: "",
     breed: "",
+    age: "",
     gender: "",
-    location: "",
   });
 
   const handleSearch = () => {
-    // Implement the search logic here based on searchCriteria
-    // You may make an API call to filter the pets based on the selected criteria
+    window.location.href = `/search?petname=${searchCriteria.petname}&species=${searchCriteria.species}&breed=${searchCriteria.breed}&age=${searchCriteria.age}&gender=${searchCriteria.gender}`;
   };
 
   return (
-    
-      <div>
-        <h1>Welcome to Pet Adoption Connect</h1>
-        <div className="container">
+
+    <div>
+      <h1>Welcome to Pet Adoption Connect</h1>
+      <div className="container">
         <div className="login-section">
           {loggedInUser ? (
             <>
@@ -88,6 +80,45 @@ function Home({ loggedInUser, setLoggedInUser }) {
           <p>Find your perfect pet companion here!</p>
           <p>We connect pet owners with potential adopters.</p>
         </div>
+        <div className="search-pets">
+          <h2>Search Available Pets</h2>
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Name"
+              value={searchCriteria.petname}
+              onChange={(e) => setSearchCriteria({ ...searchCriteria, petname: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Species"
+              value={searchCriteria.species}
+              onChange={(e) => setSearchCriteria({ ...searchCriteria, species: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Breed"
+              value={searchCriteria.breed}
+              onChange={(e) => setSearchCriteria({ ...searchCriteria, breed: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Age"
+              value={searchCriteria.age}
+              onChange={(e) => setSearchCriteria({ ...searchCriteria, age: e.target.value })}
+            />
+            <select
+          value={searchCriteria.gender}
+          onChange={(e) => setSearchCriteria({ ...searchCriteria, gender: e.target.value })}
+          placeholder="Gender"
+        >
+          <option value="" disabled hidden>Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+            <button className='task-button' onClick={handleSearch}>Search</button>
+          </div>
+        </div>
         <div className="pets-list">
           <h2>Featured Pets</h2>
           {featuredPets.map((pet) => (
@@ -100,35 +131,6 @@ function Home({ loggedInUser, setLoggedInUser }) {
               </div>
             </Link>
           ))}
-          <div className="search-pets">
-            <h2>Search Available Pets</h2>
-            <div className="search-container">
-              <select
-                value={searchCriteria.species}
-                onChange={(e) => setSearchCriteria({ ...searchCriteria, species: e.target.value })}
-              >
-                {/* Populate options based on available species */}
-              </select>
-              <select
-                value={searchCriteria.breed}
-                onChange={(e) => setSearchCriteria({ ...searchCriteria, breed: e.target.value })}
-              >
-                {/* Populate options based on available breeds */}
-              </select>
-              <select
-                value={searchCriteria.gender}
-                onChange={(e) => setSearchCriteria({ ...searchCriteria, gender: e.target.value })}
-              >
-                {/* Populate options based on available genders */}
-              </select>
-              <input
-                type="text"
-                placeholder="Location"
-                value={searchCriteria.location}
-                onChange={(e) => setSearchCriteria({ ...searchCriteria, location: e.target.value })} />
-              <button className='task-button' onClick={handleSearch}>Search</button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

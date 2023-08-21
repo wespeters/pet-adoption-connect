@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from datetime import datetime
 from sqlalchemy.sql.expression import func
+from sqlalchemy import or_
 from config import *
 from extensions import db
 from models import *
@@ -60,7 +61,7 @@ class UserLogin(Resource):
 
         user = User.query.filter_by(username=username).first()
 
-        if user and user.password == password: # Note: Passwords should be hashed in production.
+        if user and user.password == password:
             response = {
                 'status': 'success',
                 'message': 'Login successful',
@@ -121,6 +122,38 @@ class AvailablePets(Resource):
         except Exception as e:
             app.logger.error(f"An error occurred while fetching available pets: {str(e)}")
             return {"message": "An error occurred while fetching available pets"}, 500
+        
+class SearchPets(Resource):
+    def get(self):
+        try:
+            petname = request.args.get('petname', '').strip().lower()
+            species = request.args.get('species', '').strip().lower()
+            breed = request.args.get('breed', '').strip().lower()
+            age = request.args.get('age', '').strip().lower()
+            gender = request.args.get('gender', '').strip()
+
+            query = Pet.query.filter_by(status='Available')
+
+            filters = []
+            if petname:
+                filters.append(Pet.petname.ilike(f"%{petname}%"))
+            if species:
+                filters.append(Pet.species.ilike(f"%{species}%"))
+            if breed:
+                filters.append(Pet.breed.ilike(f"%{breed}%"))
+            if age:
+                filters.append(Pet.age.ilike(f"%{age}%"))
+            if gender:
+                filters.append(Pet.gender == gender)
+
+            if filters:
+                query = query.filter(or_(*filters))
+
+            pets = query.all()
+            return [pet.to_dict() for pet in pets], 200
+        except Exception as e:
+            app.logger.error(f"An error occurred while fetching search results: {str(e)}")
+            return {"message": "An error occurred while fetching search results"}, 500
 
 class FeaturedPets(Resource):
     def get(self):
@@ -150,7 +183,6 @@ class Messages(Resource):
         data = request.get_json()
         print("Received data:", data)
 
-        # Validate that required keys are present
         required_keys = ['sender_id', 'receiver_id', 'content']
         for key in required_keys:
             if key not in data:
@@ -190,7 +222,6 @@ class Appointments(Resource):
     def post(self):
         data = request.get_json()
         
-        # Convert the date_time string to a datetime object
         if 'date_time' in data:
             data['date_time'] = datetime.strptime(data['date_time'], "%Y-%m-%dT%H:%M")
         
@@ -247,21 +278,21 @@ class Organizations(Resource):
 class Resources(Resource):
     def get(self, id=None):
         if id:
-            resource = AppResource.query.get_or_404(id)  # Change here
+            resource = AppResource.query.get_or_404(id)
             return resource.to_dict(), 200
         else:
-            resources = AppResource.query.all()  # Change here
+            resources = AppResource.query.all()
             return [resource.to_dict() for resource in resources], 200
 
     def post(self):
         data = request.get_json()
-        resource = AppResource(**data)  # Change here
+        resource = AppResource(**data)
         db.session.add(resource)
         db.session.commit()
         return resource.to_dict(), 201
 
     def patch(self, id):
-        resource = AppResource.query.get_or_404(id)  # Change here
+        resource = AppResource.query.get_or_404(id)
         data = request.get_json()
         for key, value in data.items():
             setattr(resource, key, value)
@@ -269,7 +300,7 @@ class Resources(Resource):
         return resource.to_dict()
 
     def delete(self, id):
-        resource = AppResource.query.get_or_404(id)  # Change here
+        resource = AppResource.query.get_or_404(id)
         db.session.delete(resource)
         db.session.commit()
         return '', 204
@@ -282,6 +313,7 @@ api.add_resource(UserByUsername, '/users/username/<string:username>')
 api.add_resource(Pets, '/pets', '/pets/<int:id>')
 api.add_resource(AvailablePets, '/pets/available')
 api.add_resource(FeaturedPets, '/pets/featured')
+api.add_resource(SearchPets, '/pets/search')
 api.add_resource(Messages, '/messages', '/messages/<int:id>')
 api.add_resource(Appointments, '/appointments', '/appointments/<int:id>')
 api.add_resource(Organizations, '/organizations', '/organizations/<int:id>')

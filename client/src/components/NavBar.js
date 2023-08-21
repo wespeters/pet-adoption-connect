@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DarkModeToggle from './DarkModeToggle'; // Import DarkModeToggle
+import DarkModeToggle from './DarkModeToggle';
 import './NavBar.css';
 
 function NavBar({ loggedInUser, handleLogout }) {
     const handlePostNewPet = (e) => {
         if (!loggedInUser || loggedInUser.role !== 'owner') {
             alert('You must be registered and logged in as an owner to post a new pet.');
-            e.preventDefault(); // Prevent the link from navigating
+            e.preventDefault();
         }
     };
 
@@ -17,7 +17,7 @@ function NavBar({ loggedInUser, handleLogout }) {
                 <h1>Pet Adoption Connect</h1>
             </div>
             <div className="dark-mode-toggle-container">
-                <DarkModeToggle /> {/* Render DarkModeToggle */}
+                <DarkModeToggle />
             </div>
             <div className='navbar-links'>
                 <Link to="/">Home</Link>

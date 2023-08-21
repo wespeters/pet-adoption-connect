@@ -20,7 +20,7 @@ class User(db.Model, SerializerMixin, UserMixin):
     authenticated = Column(Boolean, default=False)
 
     serialize_rules = (
-        '-organization.users',  # Exclude users from the organization during serialization
+        '-organization.users',
     )
 
     @validates('username')
@@ -68,8 +68,8 @@ class Pet(db.Model, SerializerMixin):
     organization_id = Column(Integer, ForeignKey('organizations.organization_id'))
 
     serialize_rules = (
-        '-owner.organization', # Exclude organization from the owner during serialization
-        '-organization.pets',  # Exclude pets from the organization during serialization
+        '-owner.organization',
+        '-organization.pets',
     )
 
 class Message(db.Model, SerializerMixin):
@@ -93,8 +93,8 @@ class Message(db.Model, SerializerMixin):
 
 
     serialize_rules = (
-        '-sender.organization',  # Exclude organization from the sender during serialization
-        '-receiver.organization', # Exclude organization from the receiver during serialization
+        '-sender.organization',
+        '-receiver.organization',
     )
 
 class Appointment(db.Model, SerializerMixin):
@@ -106,7 +106,7 @@ class Appointment(db.Model, SerializerMixin):
     status = Column(String)
 
     serialize_rules = (
-        '-adopter.organization', # Exclude organization from the adopter during serialization
+        '-adopter.organization',
     )
 
 class Organization(db.Model, SerializerMixin):
@@ -121,8 +121,8 @@ class Organization(db.Model, SerializerMixin):
     pets = db.relationship('Pet', backref='organization', lazy=True)
 
     serialize_rules = (
-        '-admin.organization', # Exclude organization from the admin during serialization
-        '-pets.organization',   # Exclude organization from the pets during serialization
+        '-admin.organization',
+        '-pets.organization',
     )  
 
 class AppResource(db.Model, SerializerMixin):
@@ -131,6 +131,6 @@ class AppResource(db.Model, SerializerMixin):
     title = Column(String)
     content = Column(String)
     author = Column(String)
-    category = Column(String)  # E.g., "adoption tips," "preparation guide," etc.
+    category = Column(String)
     created_at = Column(TIMESTAMP)
 

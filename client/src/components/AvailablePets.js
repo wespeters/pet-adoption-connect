@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom"; // Import the Link component
+import { Link } from "react-router-dom"; 
 
 function AvailablePets() {
   const [availablePets, setAvailablePets] = useState([]);
@@ -17,7 +17,7 @@ function AvailablePets() {
       <h2>Available Pets</h2>
       <div className="available-pets-container">
         {availablePets.map((pet) => (
-          <Link to={`/pets/${pet.pet_id}`} key={pet.pet_id}> {/* Wrap pet card inside Link */}
+          <Link to={`/pets/${pet.pet_id}`} key={pet.pet_id}>
             <div className="pet-card">
               <img src={pet.image_url} alt={pet.petname} />
               <p>Name: {pet.petname}</p>
