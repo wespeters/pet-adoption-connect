@@ -50,11 +50,12 @@ function Post({ loggedInUser }) {
                 <input type="text" name="species" placeholder="Species" required onChange={handleChange} />
                 <input type="text" name="breed" placeholder="Breed" required onChange={handleChange} />
                 <input type="text" name="age" placeholder="Age" required onChange={handleChange} />
-                <select name="gender" onChange={handleChange}>
-                    <option value="" disabled selected>Select Gender</option>
-                    <option value="owner">Male</option>
-                    <option value="adopter">Female</option>
+                <select name="gender" value={formValues.gender} onChange={handleChange}>
+                    <option value="" disabled>Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                 </select>
+
                 <textarea
                     name="medical_conditions"
                     placeholder="Medical Conditions (enter 'None' if none)"

@@ -31,7 +31,6 @@ function Home({ loggedInUser, setLoggedInUser }) {
 
   useEffect(() => {
     axios.get("http://localhost:5555/pets/featured").then((response) => {
-      console.log(response.data);
       setFeaturedPets(response.data);
     })
 
@@ -114,14 +113,15 @@ function Home({ loggedInUser, setLoggedInUser }) {
               onChange={(e) => setSearchCriteria({ ...searchCriteria, age: e.target.value })}
             />
             <select
-          value={searchCriteria.gender}
-          onChange={(e) => setSearchCriteria({ ...searchCriteria, gender: e.target.value })}
-          placeholder="Gender"
-        >
-          <option value="" disabled selected>Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
+              value={searchCriteria.gender}
+              onChange={(e) => setSearchCriteria({ ...searchCriteria, gender: e.target.value })}
+              placeholder="Gender"
+            >
+              <option value="" disabled>Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+
             <button className='task-button' onClick={handleSearch}>Search</button>
           </div>
         </div>

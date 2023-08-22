@@ -38,11 +38,12 @@ function Register() {
         <p><input name="username" type="text" placeholder="Username" onChange={handleChange} /></p>
         <p><input name="password" type="password" placeholder="Password" onChange={handleChange} /></p>
         <p><input name="email" type="email" placeholder="Email" onChange={handleChange} /></p>
-        <p><select name="role" onChange={handleChange}>
-          <option value="" disabled selected>Select Role</option>
+        <p><select name="role" value={formData.role} onChange={handleChange}>
+          <option value="" disabled>Select Role</option>
           <option value="owner">Owner</option>
           <option value="adopter">Adopter</option>
-        </select></p>
+        </select>
+        </p>
         <p><textarea name="contactinfo" rows="5" cols="50" placeholder="Contact Information" onChange={handleChange}></textarea></p>
         <p><button className='task-button' type="submit">Register</button></p>
       </form>
