@@ -6,6 +6,7 @@ import PetDetail from './PetDetail';
 import AvailablePets from "./AvailablePets";
 import Messages from "./Messages";
 import Post from "./Post";
+import Register from './Register';
 import ResourcesForAdopters from './ResourcesForAdopters';
 import ResourceDetail from "./ResourceDetail";
 import Search from "./Search";
@@ -41,6 +42,7 @@ function App() {
           <Route path="/resources" element={<ResourcesForAdopters />} />
           <Route path="/resources/:resource_id" element={<ResourceDetail />} />
           <Route path="/post" element={<Post loggedInUser={loggedInUser} />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </DarkModeProvider>

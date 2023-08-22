@@ -346,6 +346,10 @@ button {
   width: 100%;
 }
 
+.register-section {
+  text-align: center;
+}
+
 .resource-item {
   text-align: left;
   border: 1px solid #e0e0e0;

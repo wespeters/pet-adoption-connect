@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 
 function Home({ loggedInUser, setLoggedInUser }) {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -48,6 +49,10 @@ function Home({ loggedInUser, setLoggedInUser }) {
     window.location.href = `/search?petname=${searchCriteria.petname}&species=${searchCriteria.species}&breed=${searchCriteria.breed}&age=${searchCriteria.age}&gender=${searchCriteria.gender}`;
   };
 
+  const navigateToRegister = () => {
+    navigate("/register");
+  };
+
   return (
 
     <div>
@@ -72,6 +77,7 @@ function Home({ loggedInUser, setLoggedInUser }) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)} />
               <button className='task-button' type="submit">Login</button>
+              <button className='task-button' type="button" onClick={navigateToRegister}>Register</button>
             </form>
           )}
           {error && <div className="error-message">{error}</div>}
@@ -112,7 +118,7 @@ function Home({ loggedInUser, setLoggedInUser }) {
           onChange={(e) => setSearchCriteria({ ...searchCriteria, gender: e.target.value })}
           placeholder="Gender"
         >
-          <option value="" disabled hidden>Gender</option>
+          <option value="" disabled selected>Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>

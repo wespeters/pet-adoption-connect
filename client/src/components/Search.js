@@ -60,7 +60,7 @@ function Search() {
           onChange={(e) => setSearchCriteria({ ...searchCriteria, gender: e.target.value })}
           placeholder="Gender"
         >
-          <option value="" disabled hidden>Gender</option>
+          <option value="" disabled selected>Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>

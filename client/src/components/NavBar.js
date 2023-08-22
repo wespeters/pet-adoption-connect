@@ -30,7 +30,7 @@ function NavBar({ loggedInUser, handleLogout }) {
                         <button className="task-button" onClick={handleLogout}>Logout</button>
                     </>
                 ) : (
-                    <Link to="/">Login</Link>
+                    <Link to="/">Login/Register</Link>
                 )}
             </div>
         </div>
