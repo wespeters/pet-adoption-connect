@@ -74,17 +74,25 @@ function PetDetail({ loggedInUser }) {
         <form onSubmit={handleUpdateSubmit}>
           <input type="text" name="petname" placeholder="Pet's Name" defaultValue={pet.petname} onChange={handleUpdateChange} />
           <select name="species" defaultValue={pet.species} onChange={handleUpdateChange}>
-            <option value="dog">dog</option>
-            <option value="cat">cat</option>
-            <option value="reptiles">reptiles</option>
-            <option value="birds">birds</option>
-            <option value="small mammals">small mammals</option>
+            <option value="dog">Dog</option>
+            <option value="cat">Cat</option>
+            <option value="reptiles">Reptiles</option>
+            <option value="birds">Birds</option>
+            <option value="small mammals">Small mammals</option>
           </select>
           <select name="status" defaultValue={pet.status} onChange={handleUpdateChange}>
             <option value="Available">Available</option>
             <option value="Adopted">Adopted</option>
           </select>
-          {/* Add other input fields as needed */}
+          <p><label htmlFor="medical_conditions">Medical Conditions:</label></p>
+          <textarea
+                    name="medical_conditions"
+                    label="Medical Conditions"
+                    defaultValue={pet.medical_conditions}
+                    placeholder="Medical Conditions (enter 'None' if none)"
+                    required
+                    onChange={handleUpdateChange}
+                />
           <button type="submit">Submit</button>
           <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
         </form>
