@@ -39,6 +39,7 @@ function App() {
           <Route path="/pets/:id" element={<PetDetail loggedInUser={loggedInUser} />} />
           <Route path="/pets/available" element={<AvailablePets />} />
           <Route path="/messages" element={<Messages loggedInUser={loggedInUser} />} />
+          <Route path="/messages/compose" element={<Messages loggedInUser={loggedInUser} />} />
           <Route path="/resources" element={<ResourcesForAdopters />} />
           <Route path="/resources/:resource_id" element={<ResourceDetail />} />
           <Route path="/post" element={<Post loggedInUser={loggedInUser} />} />

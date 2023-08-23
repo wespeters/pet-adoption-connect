@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 function Messages({ loggedInUser }) {
   const [inbox, setInbox] = useState([]);
@@ -9,7 +9,15 @@ function Messages({ loggedInUser }) {
   const [recipient, setRecipient] = useState("");
   const [showCompose, setShowCompose] = useState(false);
 
+  const [searchParams] = useSearchParams();
+  const recipientParam = searchParams.get("recipient");
+
   useEffect(() => {
+    if (recipientParam) {
+      setRecipient(recipientParam);
+      setShowCompose(true);
+    }
+
     if (loggedInUser) {
       axios
         .get(`http://localhost:5555/messages?receiver_id=${loggedInUser.user_id}`)
@@ -19,7 +27,7 @@ function Messages({ loggedInUser }) {
         .get(`http://localhost:5555/messages?sender_id=${loggedInUser.user_id}`)
         .then((response) => setSentMessages(response.data));
     }
-  }, [loggedInUser]);
+  }, [loggedInUser, recipientParam]);
 
   const getUserIdByUsername = (username) => {
     return axios
@@ -33,7 +41,6 @@ function Messages({ loggedInUser }) {
 
 
   const sendMessage = async (recipientUsername) => {
-    console.log('Logged-in user:', loggedInUser);
     const receiverId = await getUserIdByUsername(recipientUsername);
     if (receiverId) {
       axios.post(`http://localhost:5555/messages`, {

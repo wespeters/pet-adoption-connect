@@ -66,12 +66,16 @@ class Pet(db.Model, SerializerMixin):
     status = Column(String)
     image_url = Column(String)
     owner_id = Column(Integer, ForeignKey('users.user_id'))
+    owner = db.relationship('User', backref='pets')  # Added this line
     organization_id = Column(Integer, ForeignKey('organizations.organization_id'))
 
     serialize_rules = (
-        '-owner.organization',
+        '-owner',
         '-organization.pets',
     )
+
+    # ... rest of the class definition ...
+
 
     @validates('species')
     def validate_species(self, key, species):
@@ -88,6 +92,11 @@ class Pet(db.Model, SerializerMixin):
         parsed_url = urlparse(image_url)
         assert bool(parsed_url.scheme) and bool(parsed_url.netloc), "Invalid URL format for image."
         return image_url
+    
+    def to_dict_with_owner_username(self):
+        data = self.to_dict()  # Serialize using existing rules
+        data['owner_username'] = self.owner.username if self.owner else "Unknown"  # Add owner's username
+        return data
 
 class Message(db.Model, SerializerMixin):
     __tablename__ = 'messages'

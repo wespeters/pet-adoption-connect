@@ -38,7 +38,7 @@ function PetDetail({ loggedInUser }) {
   };
 
   const navigate = useNavigate();
-  
+
   const handleDeletePet = async () => {
     if (window.confirm('Are you sure you want to delete this pet?')) {
       try {
@@ -52,6 +52,15 @@ function PetDetail({ loggedInUser }) {
     }
   };
 
+  const handleSendMessageToOwner = () => {
+    if (pet.owner_username) {
+      navigate(`/messages/compose?recipient=${pet.owner_username}`);
+    } else {
+      // Handle error or show a message to the user
+      console.error('Owner information is not available');
+    }    
+  };  
+
   return (
     <div className="container">
       <div className="pet-detail">
@@ -63,7 +72,13 @@ function PetDetail({ loggedInUser }) {
         <p>Gender: {pet.gender}</p>
         <p>Medical Conditions: {pet.medical_conditions}</p>
         <p>Status: {pet.status}</p>
+        <p>Owner: {pet.owner_username || "Unknown"}</p>
       </div>
+      
+      {loggedInUser && loggedInUser.role === "adopter" && (
+        <button onClick={handleSendMessageToOwner}>Send Message to Owner</button>
+      )}
+
       {loggedInUser && loggedInUser.user_id === pet.owner_id && !isEditing && (
         <>
           <button onClick={() => setIsEditing(true)}>Update Pet Details</button>
@@ -86,13 +101,13 @@ function PetDetail({ loggedInUser }) {
           </select>
           <p><label htmlFor="medical_conditions">Medical Conditions:</label></p>
           <textarea
-                    name="medical_conditions"
-                    label="Medical Conditions"
-                    defaultValue={pet.medical_conditions}
-                    placeholder="Medical Conditions (enter 'None' if none)"
-                    required
-                    onChange={handleUpdateChange}
-                />
+            name="medical_conditions"
+            label="Medical Conditions"
+            defaultValue={pet.medical_conditions}
+            placeholder="Medical Conditions (enter 'None' if none)"
+            required
+            onChange={handleUpdateChange}
+          />
           <button type="submit">Submit</button>
           <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
         </form>
