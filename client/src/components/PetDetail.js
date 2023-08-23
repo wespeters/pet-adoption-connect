@@ -67,13 +67,23 @@ function PetDetail({ loggedInUser }) {
       {loggedInUser && loggedInUser.user_id === pet.owner_id && !isEditing && (
         <>
           <button onClick={() => setIsEditing(true)}>Update Pet Details</button>
-          <button onClick={handleDeletePet}>Delete Pet</button> {/* Delete Pet button */}
+          <button onClick={handleDeletePet}>Delete Pet</button>
         </>
       )}
       {isEditing && (
         <form onSubmit={handleUpdateSubmit}>
           <input type="text" name="petname" placeholder="Pet's Name" defaultValue={pet.petname} onChange={handleUpdateChange} />
-          <input type="text" name="status" placeholder="Status" defaultValue={pet.status} onChange={handleUpdateChange} />
+          <select name="species" defaultValue={pet.species} onChange={handleUpdateChange}>
+            <option value="dog">dog</option>
+            <option value="cat">cat</option>
+            <option value="reptiles">reptiles</option>
+            <option value="birds">birds</option>
+            <option value="small mammals">small mammals</option>
+          </select>
+          <select name="status" defaultValue={pet.status} onChange={handleUpdateChange}>
+            <option value="Available">Available</option>
+            <option value="Adopted">Adopted</option>
+          </select>
           {/* Add other input fields as needed */}
           <button type="submit">Submit</button>
           <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>

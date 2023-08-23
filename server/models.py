@@ -5,6 +5,7 @@ from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, DateTime, T
 from flask_login import UserMixin
 from sqlalchemy.orm import validates
 from datetime import datetime
+from urllib.parse import urlparse
 import re
 
 class User(db.Model, SerializerMixin, UserMixin):
@@ -71,6 +72,22 @@ class Pet(db.Model, SerializerMixin):
         '-owner.organization',
         '-organization.pets',
     )
+
+    @validates('species')
+    def validate_species(self, key, species):
+        assert species in ['dog', 'cat', 'reptiles', 'birds', 'small mammals'], "Species must be one of 'dog', 'cat', 'reptiles', 'birds', or 'small mammals'."
+        return species
+
+    @validates('gender')
+    def validate_gender(self, key, gender):
+        assert gender in ['Male', 'Female'], "Gender must be either 'Male' or 'Female'."
+        return gender
+
+    @validates('image_url')
+    def validate_image_url(self, key, image_url):
+        parsed_url = urlparse(image_url)
+        assert bool(parsed_url.scheme) and bool(parsed_url.netloc), "Invalid URL format for image."
+        return image_url
 
 class Message(db.Model, SerializerMixin):
     __tablename__ = 'messages'

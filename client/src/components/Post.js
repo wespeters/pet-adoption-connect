@@ -47,7 +47,14 @@ function Post({ loggedInUser }) {
             <h2>Post a New Pet</h2>
             <form onSubmit={handleSubmit}>
                 <input type="text" name="petname" placeholder="Pet's Name" required onChange={handleChange} />
-                <input type="text" name="species" placeholder="Species" required onChange={handleChange} />
+                <select name="species" value={formValues.species} required onChange={handleChange}>
+                    <option value="" disabled>Species</option>
+                    <option value="dog">Dog</option>
+                    <option value="cat">Cat</option>
+                    <option value="reptiles">Reptiles</option>
+                    <option value="birds">Birds</option>
+                    <option value="small mammals">Small mammals</option>
+                </select>
                 <input type="text" name="breed" placeholder="Breed" required onChange={handleChange} />
                 <input type="text" name="age" placeholder="Age" required onChange={handleChange} />
                 <select name="gender" value={formValues.gender} onChange={handleChange}>

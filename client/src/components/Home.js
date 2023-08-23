@@ -20,10 +20,9 @@ function Home({ loggedInUser, setLoggedInUser }) {
       if (response.data.status === 'success') {
         setLoggedInUser(response.data.user);
         sessionStorage.setItem('loggedInUser', JSON.stringify(response.data.user));
-        console.log('Login successful:', response.data.user);
       }
     } catch (err) {
-      setError('Invalid credentials. Please try again.');
+      setError('Invalid username or password. Please try again.');
     }
   };
 

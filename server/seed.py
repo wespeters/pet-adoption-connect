@@ -74,7 +74,7 @@ if __name__ == '__main__':
         # Creating Pets
         pets = [Pet(
             petname=fake.first_name(),
-            species=rc(['Dog', 'Cat']),
+            species=rc(['dog', 'cat', 'reptiles', 'birds', 'small mammals']),
             breed=fake.last_name(),
             age=str(randint(1, 15)),
             gender=rc(['Male', 'Female']),

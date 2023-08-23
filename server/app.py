@@ -5,6 +5,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from datetime import datetime
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.sql.expression import func
 from sqlalchemy import or_
 from config import *
@@ -75,7 +76,7 @@ class UserLogin(Resource):
         else:
             response = {
                 'status': 'error',
-                'message': 'Invalid credentials'
+                'message': 'Invalid username or password'
             }
             return response, 401
         
@@ -94,19 +95,31 @@ class Pets(Resource):
             return [pet.to_dict() for pet in pets], 200
 
     def post(self):
-        data = request.get_json()
-        pet = Pet(**data)
-        db.session.add(pet)
-        db.session.commit()
-        return pet.to_dict(), 201
+        try:
+            data = request.get_json()
+            pet = Pet(**data)
+            db.session.add(pet)
+            db.session.commit()
+            return pet.to_dict(), 201
+        except AssertionError as e:
+            return {"status": "error", "message": str(e)}, 400
+        except IntegrityError:
+            db.session.rollback()
+            return {"status": "error", "message": "An error occurred while saving the pet."}, 500
 
     def patch(self, id):
-        pet = Pet.query.get_or_404(id)
-        data = request.get_json()
-        for key, value in data.items():
-            setattr(pet, key, value)
-        db.session.commit()
-        return pet.to_dict()
+        try:
+            pet = Pet.query.get_or_404(id)
+            data = request.get_json()
+            for key, value in data.items():
+                setattr(pet, key, value)
+            db.session.commit()
+            return pet.to_dict()
+        except AssertionError as e:
+            return {"status": "error", "message": str(e)}, 400
+        except IntegrityError:
+            db.session.rollback()
+            return {"status": "error", "message": "An error occurred while updating the pet."}, 500
 
     def delete(self, id):
         pet = Pet.query.get_or_404(id)
