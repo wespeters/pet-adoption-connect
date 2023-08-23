@@ -21,15 +21,15 @@ Additionally, the website might also have a section for pet rescue organizations
 
 ## Entity Relationship Diagram
 
-![Entity Relationship Diagram](/Images/Pet%20Adoption%20Connect.png)
+![Entity Relationship Diagram](/images/Pet%20Adoption%20Connect.png)
 
 ## Wireframes
 
-![Alt text](/Images/image-1.png)
-![Alt text](/Images/image.png)
-![Alt text](/Images/image-2.png)
-![Alt text](/Images/image-3.png)
-![Alt text](/Images/image-4.png)
+![Alt text](/images/image-1.png)
+![Alt text](/images/image.png)
+![Alt text](/images/image-2.png)
+![Alt text](/images/image-3.png)
+![Alt text](/images/image-4.png)
 
 ---
 
