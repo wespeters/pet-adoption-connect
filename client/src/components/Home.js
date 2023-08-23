@@ -93,12 +93,18 @@ function Home({ loggedInUser, setLoggedInUser }) {
               value={searchCriteria.petname}
               onChange={(e) => setSearchCriteria({ ...searchCriteria, petname: e.target.value })}
             />
-            <input
-              type="text"
-              placeholder="Species"
+            <select
               value={searchCriteria.species}
               onChange={(e) => setSearchCriteria({ ...searchCriteria, species: e.target.value })}
-            />
+              placeholder="Species"
+            >
+              <option value="" disabled>Species</option>
+              <option value="dog">Dog</option>
+              <option value="cat">Cat</option>
+              <option value="reptiles">Reptiles</option>
+              <option value="birds">Birds</option>
+              <option value="small mammals">Small mammals</option>
+            </select>
             <input
               type="text"
               placeholder="Breed"
