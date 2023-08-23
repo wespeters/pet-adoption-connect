@@ -57,10 +57,8 @@ function Messages({ loggedInUser }) {
           console.error("Error sending message:", error.response.data.message);
         });
     } else {
-      // Handle error (e.g., show an error message)
     }
   };
-
 
   const handleCompose = () => {
     setShowCompose(true);
@@ -76,12 +74,10 @@ function Messages({ loggedInUser }) {
   }
 
   const handleDeleteMessage = (messageId) => {
-    // Confirm with the user before deleting
     if (window.confirm("Are you sure you want to delete this message?")) {
       axios
         .delete(`http://localhost:5555/messages/${messageId}`)
         .then(() => {
-          // Refresh the inbox by removing the deleted message
           setInbox(inbox.filter((message) => message.message_id !== messageId));
           alert('Message deleted successfully!');
         })

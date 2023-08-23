@@ -56,7 +56,6 @@ function PetDetail({ loggedInUser }) {
     if (pet.owner_username) {
       navigate(`/messages/compose?recipient=${pet.owner_username}`);
     } else {
-      // Handle error or show a message to the user
       console.error('Owner information is not available');
     }    
   };  

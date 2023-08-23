@@ -74,9 +74,6 @@ class Pet(db.Model, SerializerMixin):
         '-organization.pets',
     )
 
-    # ... rest of the class definition ...
-
-
     @validates('species')
     def validate_species(self, key, species):
         assert species in ['dog', 'cat', 'reptiles', 'birds', 'small mammals'], "Species must be one of 'dog', 'cat', 'reptiles', 'birds', or 'small mammals'."
@@ -94,8 +91,8 @@ class Pet(db.Model, SerializerMixin):
         return image_url
     
     def to_dict_with_owner_username(self):
-        data = self.to_dict()  # Serialize using existing rules
-        data['owner_username'] = self.owner.username if self.owner else "Unknown"  # Add owner's username
+        data = self.to_dict()
+        data['owner_username'] = self.owner.username if self.owner else "Unknown"
         return data
 
 class Message(db.Model, SerializerMixin):

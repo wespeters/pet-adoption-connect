@@ -41,12 +41,11 @@ if __name__ == '__main__':
         for _ in range(50):
             role = rc(['owner', 'adopter'])
 
-            # Ensure unique and valid-length username
             username = fake.user_name()
             while username in generated_usernames or len(username) < 5 or len(username) > 20:
-                username = fake.user_name()[:20]  # Truncate if necessary
+                username = fake.user_name()[:20]
                 if len(username) < 5:
-                    username = username.ljust(5, '0')  # Pad with zeros if too short
+                    username = username.ljust(5, '0')
             generated_usernames.add(username)
 
             user = User(
@@ -65,10 +64,8 @@ if __name__ == '__main__':
         users = owners + adopters
         db.session.add_all(users)
 
-        # Commit users to the database
         db.session.commit()
 
-        # Track generated pet_ids
         generated_pet_ids = set()
 
         # Creating Pets
@@ -82,18 +79,15 @@ if __name__ == '__main__':
             status=rc(['Available', 'Adopted']),
             owner_id=rc(users).user_id,
             organization_id=rc(organizations).organization_id,
-            # Temporarily leaving image_url blank, will update later
+            
         ) for _ in range(20)]
         db.session.add_all(pets)
         
-        # Commit pets to the database to generate IDs
         db.session.commit()
 
-        # Update image_url using the auto-incremented pet_id
         for pet in pets:
             pet.image_url = f"https://example.com/images/{pet.pet_id}.jpg"
         
-        # Commit the updated pets
         db.session.commit()
 
         # Creating Messages

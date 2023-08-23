@@ -89,7 +89,7 @@ class Pets(Resource):
     def get(self, id=None):
         if id:
             pet = Pet.query.get_or_404(id)
-            return pet.to_dict_with_owner_username(), 200  # Change here
+            return pet.to_dict_with_owner_username(), 200
         else:
             pets = Pet.query.all()
             return [pet.to_dict() for pet in pets], 200
@@ -172,7 +172,7 @@ class FeaturedPets(Resource):
     def get(self):
         try:
             pets = Pet.query.filter_by(status='Available').order_by(func.random()).limit(4).all()
-            return [pet.to_dict_with_owner_username() for pet in pets], 200  # Using custom method
+            return [pet.to_dict_with_owner_username() for pet in pets], 200
         except Exception as e:
             app.logger.error(f"An error occurred while fetching featured pets: {str(e)}")
             return {"message": "An error occurred while fetching featured pets"}, 500
@@ -318,8 +318,6 @@ class Resources(Resource):
         db.session.commit()
         return '', 204
 
-
-# Add the resources to the API
 api.add_resource(Users, '/users', '/users/<int:id>')
 api.add_resource(UserLogin, '/users/login')
 api.add_resource(UserByUsername, '/users/username/<string:username>')
