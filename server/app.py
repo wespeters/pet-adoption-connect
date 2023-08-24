@@ -147,20 +147,16 @@ class SearchPets(Resource):
 
             query = Pet.query.filter_by(status='Available')
 
-            filters = []
             if petname:
-                filters.append(Pet.petname.ilike(f"%{petname}%"))
+                query = query.filter(Pet.petname.ilike(f"%{petname}%"))
             if species:
-                filters.append(Pet.species.ilike(f"%{species}%"))
+                query = query.filter(Pet.species.ilike(f"%{species}%"))
             if breed:
-                filters.append(Pet.breed.ilike(f"%{breed}%"))
+                query = query.filter(Pet.breed.ilike(f"%{breed}%"))
             if age:
-                filters.append(Pet.age.ilike(f"%{age}%"))
+                query = query.filter(Pet.age.ilike(f"%{age}%"))
             if gender:
-                filters.append(Pet.gender == gender)
-
-            if filters:
-                query = query.filter(or_(*filters))
+                query = query.filter(Pet.gender == gender)
 
             pets = query.all()
             return [pet.to_dict() for pet in pets], 200
