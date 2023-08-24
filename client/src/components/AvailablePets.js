@@ -19,7 +19,7 @@ function AvailablePets() {
         {availablePets.map((pet) => (
           <Link to={`/pets/${pet.pet_id}`} key={pet.pet_id}>
             <div className="pet-card">
-              <img src={pet.image_url} alt={pet.petname} />
+              <img src={pet.image_url} alt={pet.petname} className="pet-image" />
               <p>Name: {pet.petname}</p>
               <p>Species: {pet.species}</p>
               <p>Breed: {pet.breed}</p>

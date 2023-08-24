@@ -63,7 +63,7 @@ function PetDetail({ loggedInUser }) {
   return (
     <div className="container">
       <div className="pet-detail">
-        <img src={pet.image_url} alt={pet.petname} />
+        <img src={pet.image_url} alt={pet.petname} className="pet-image" />
         <h2>{pet.petname}</h2>
         <p>Species: {pet.species}</p>
         <p>Breed: {pet.breed}</p>

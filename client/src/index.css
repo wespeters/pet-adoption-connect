@@ -342,6 +342,13 @@ button {
   text-align: center; 
 }
 
+.pet-image {
+  width: 150px; /* Adjust as needed */
+  height: 150px;
+  object-fit: cover; /* This will preserve the aspect ratio */
+  border-radius: 5px; /* Optional: Add border-radius for rounded corners */
+}
+
 .pets-list {
   width: 100%;
 }
