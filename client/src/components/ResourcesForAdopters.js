@@ -17,7 +17,7 @@ function ResourcesForAdopters() {
       {resources.map(resource => (
         <Link to={`/resources/${resource.resource_id}`} key={resource.resource_id} className="resource-item">
           <h3>{resource.title}</h3>
-          <p>{resource.content}</p>
+          <div dangerouslySetInnerHTML={{ __html: resource.content }}/>
           <p><strong>Author:</strong> {resource.author}</p>
           <p><strong>Category:</strong> {resource.category}</p>
         </Link>

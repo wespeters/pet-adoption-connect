@@ -18,7 +18,7 @@ function ResourceDetail() {
   return (
     <div className="resource-item">
       <h2>{resource.title}</h2>
-      <p>{resource.content}</p>
+      <div dangerouslySetInnerHTML={{ __html: resource.content }}/>
       <p><strong>Author:</strong> {resource.author}</p>
       <p><strong>Category:</strong> {resource.category}</p>
     </div>
