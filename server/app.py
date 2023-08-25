@@ -35,11 +35,18 @@ class Users(Resource):
             return [user.to_dict() for user in users], 200
 
     def post(self):
-        data = request.get_json()
-        user = User(**data)
-        db.session.add(user)
-        db.session.commit()
-        return user.to_dict(), 201
+        try:
+            data = request.get_json()
+            user = User(**data)
+            db.session.add(user)
+            db.session.commit()
+            return user.to_dict(), 201
+        except ValidationError as e:  # Catch the custom validation exception
+            db.session.rollback()
+            return {"status": "error", "message": str(e)}, 400  # Return a 400 Bad Request with the error message
+        except IntegrityError:
+            db.session.rollback()
+            return {"status": "error", "message": "An error occurred while saving the user."}, 500
 
     def patch(self, id):
         user = User.query.get_or_404(id)

@@ -35,16 +35,16 @@ function Register() {
     <div className="register-section">
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
-        <p><input name="username" type="text" placeholder="Username" onChange={handleChange} /></p>
-        <p><input name="password" type="password" placeholder="Password" onChange={handleChange} /></p>
-        <p><input name="email" type="email" placeholder="Email" onChange={handleChange} /></p>
-        <p><select name="role" value={formData.role} onChange={handleChange}>
+        <p><input className="input" name="username" type="text" placeholder="Username" onChange={handleChange} /></p>
+        <p><input className="input" name="password" type="password" placeholder="Password" onChange={handleChange} /></p>
+        <p><input className="input" name="email" type="email" placeholder="Email" onChange={handleChange} /></p>
+        <p><select className="input" name="role" value={formData.role} onChange={handleChange}>
           <option value="" disabled>Select Role</option>
           <option value="owner">Owner</option>
           <option value="adopter">Adopter</option>
         </select>
         </p>
-        <p><textarea name="contactinfo" rows="5" cols="50" placeholder="Contact Information" onChange={handleChange}></textarea></p>
+        <p><textarea className="contact-information-textarea" name="contactinfo" rows="5" cols="50" placeholder="Contact Information" onChange={handleChange}></textarea></p>
         <p><button className="button button-secondary" type="submit">Register</button></p>
       </form>
       {error && <div className="error-message">{error}</div>}

@@ -94,6 +94,7 @@ function Messages({ loggedInUser }) {
       {showCompose && (
         <div className="compose-container">
           <input
+            className="input" 
             type="text"
             placeholder="Recipient Username"
             value={recipient}

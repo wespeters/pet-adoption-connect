@@ -65,11 +65,13 @@ function Home({ loggedInUser, setLoggedInUser }) {
           ) : (
             <form onSubmit={handleLogin}>
               <input
+                className="input"
                 type="text"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)} />
               <input
+                className="input"
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -88,12 +90,14 @@ function Home({ loggedInUser, setLoggedInUser }) {
           <h2>Search Available Pets</h2>
           <div className="search-container">
             <input
+              className="input"
               type="text"
               placeholder="Name"
               value={searchCriteria.petname}
               onChange={(e) => setSearchCriteria({ ...searchCriteria, petname: e.target.value })}
             />
             <select
+              className="input"
               value={searchCriteria.species}
               onChange={(e) => setSearchCriteria({ ...searchCriteria, species: e.target.value })}
               placeholder="Species"
@@ -106,18 +110,21 @@ function Home({ loggedInUser, setLoggedInUser }) {
               <option value="small mammals">Small mammals</option>
             </select>
             <input
+              className="input"
               type="text"
               placeholder="Breed"
               value={searchCriteria.breed}
               onChange={(e) => setSearchCriteria({ ...searchCriteria, breed: e.target.value })}
             />
             <input
+              className="input"
               type="text"
               placeholder="Age"
               value={searchCriteria.age}
               onChange={(e) => setSearchCriteria({ ...searchCriteria, age: e.target.value })}
             />
             <select
+              className="input"
               value={searchCriteria.gender}
               onChange={(e) => setSearchCriteria({ ...searchCriteria, gender: e.target.value })}
               placeholder="Gender"

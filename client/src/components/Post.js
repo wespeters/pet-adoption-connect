@@ -46,8 +46,8 @@ function Post({ loggedInUser }) {
         <div className="container">
             <h2>Post a New Pet</h2>
             <form onSubmit={handleSubmit}>
-                <input type="text" name="petname" placeholder="Pet's Name" required onChange={handleChange} />
-                <select name="species" value={formValues.species} required onChange={handleChange}>
+                <input className="input" type="text" name="petname" placeholder="Pet's Name" required onChange={handleChange} />
+                <select className="input" name="species" value={formValues.species} required onChange={handleChange}>
                     <option value="" disabled>Species</option>
                     <option value="dog">Dog</option>
                     <option value="cat">Cat</option>
@@ -55,21 +55,22 @@ function Post({ loggedInUser }) {
                     <option value="birds">Birds</option>
                     <option value="small mammals">Small mammals</option>
                 </select>
-                <input type="text" name="breed" placeholder="Breed" required onChange={handleChange} />
-                <input type="text" name="age" placeholder="Age" required onChange={handleChange} />
-                <select name="gender" value={formValues.gender} onChange={handleChange}>
+                <input className="input" type="text" name="breed" placeholder="Breed" required onChange={handleChange} />
+                <input className="input" type="text" name="age" placeholder="Age" required onChange={handleChange} />
+                <select className="input" name="gender" value={formValues.gender} onChange={handleChange}>
                     <option value="" disabled>Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                 </select>
 
                 <textarea
+                    className="message-content-textarea"
                     name="medical_conditions"
                     placeholder="Medical Conditions (enter 'None' if none)"
                     required
                     onChange={handleChange}
                 />
-                <input type="text" name="image_url" placeholder="Photo of your pet (paste image URL here):" required onChange={handleChange} />
+                <input className="input" type="text" name="image_url" placeholder="Photo of your pet (paste image URL here):" required onChange={handleChange} />
                 <button className="button button-secondary" type="submit">Submit</button>
             </form>
         </div>

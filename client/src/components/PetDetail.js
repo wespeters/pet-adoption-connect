@@ -75,7 +75,7 @@ function PetDetail({ loggedInUser }) {
       </div>
       
       {loggedInUser && loggedInUser.role === "adopter" && (
-        <button className="button-secondary" onClick={handleSendMessageToOwner}>Send Message to Owner</button>
+        <button className=" button button-secondary" onClick={handleSendMessageToOwner}>Send Message to Owner</button>
       )}
 
       {loggedInUser && loggedInUser.user_id === pet.owner_id && !isEditing && (

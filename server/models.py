@@ -8,6 +8,9 @@ from datetime import datetime
 from urllib.parse import urlparse
 import re
 
+class ValidationError(Exception):
+    pass
+
 class User(db.Model, SerializerMixin, UserMixin):
     __tablename__ = 'users'
     user_id = Column(Integer, primary_key=True, autoincrement=True)
@@ -26,16 +29,25 @@ class User(db.Model, SerializerMixin, UserMixin):
 
     @validates('username')
     def validate_username(self, key, username):
-        assert 5 <= len(username) <= 20, "Username must be between 5 and 20 characters long."
+        if not (5 <= len(username) <= 20):
+            raise ValidationError("Username must be between 5 and 20 characters long.")
         return username
 
     @validates('password')
     def validate_password(self, key, password):
-        assert len(password) >= 8, "Password must be at least 8 characters long."
-        assert re.search("[A-Z]", password), "Password must contain at least one uppercase letter."
-        assert re.search("[a-z]", password), "Password must contain at least one lowercase letter."
-        assert re.search("[0-9]", password), "Password must contain at least one number."
+        if len(password) < 8 or \
+           not re.search("[A-Z]", password) or \
+           not re.search("[a-z]", password) or \
+           not re.search("[0-9]", password):
+            raise ValidationError("Password must be at least 8 characters long and contain an uppercase letter, a lowercase letter, and a number.")
         return password
+
+    @validates('email')
+    def validate_email(self, key, email):
+        pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+        if not email or not re.match(pattern, email):
+            raise ValidationError('Invalid email format')
+        return email 
     
     @validates('role')
     def validate_role(self, key, role):
