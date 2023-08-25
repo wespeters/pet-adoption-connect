@@ -8,7 +8,24 @@
   top: 0; 
   left: 0; 
   width: 100%; 
-  z-index: 1000; 
+  z-index: 1000;
+  background-image: url('/public/cat.png'), url('/public/dog.png');
+  background-position: 100px 50px, 100px 50px;
+  background-size: 15%, 15%;
+  background-repeat: no-repeat;
+  animation: moveCat 4s linear infinite, moveDog 7s linear infinite;
+}
+
+@keyframes moveCat {
+  100% {
+    background-position: 100% 0px, 100px 0px;
+  }
+}
+
+@keyframes moveDog {
+  100% {
+    background-position: 0px 0px, 0px 100%;
+  }
 }
   
   .navbar-title {
@@ -25,7 +42,8 @@
   
   .navbar-links a {
     text-decoration: none;
-    color: var(--navbar-link, #333); /* Using variable for link color */
+    color: var(--navbar-link, #333);
+    font-weight: bold;
   }
   
   
@@ -38,4 +56,6 @@
       font-size: 0.8rem;
     }
   }
+
+  
   
