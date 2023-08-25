@@ -27,7 +27,7 @@ function NavBar({ loggedInUser, handleLogout }) {
                 {loggedInUser ? (
                     <>
                         <Link to="/messages">View Message Inbox</Link>
-                        <button className="task-button" onClick={handleLogout}>Logout</button>
+                        <button className="button button-primary" onClick={handleLogout}>Logout</button>
                     </>
                 ) : (
                     <Link to="/">Login/Register</Link>

@@ -70,7 +70,7 @@ function Post({ loggedInUser }) {
                     onChange={handleChange}
                 />
                 <input type="text" name="image_url" placeholder="Photo of your pet (paste image URL here):" required onChange={handleChange} />
-                <button type="submit">Submit</button>
+                <button className="button button-secondary" type="submit">Submit</button>
             </form>
         </div>
     );

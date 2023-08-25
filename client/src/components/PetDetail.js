@@ -75,13 +75,13 @@ function PetDetail({ loggedInUser }) {
       </div>
       
       {loggedInUser && loggedInUser.role === "adopter" && (
-        <button onClick={handleSendMessageToOwner}>Send Message to Owner</button>
+        <button className="button-secondary" onClick={handleSendMessageToOwner}>Send Message to Owner</button>
       )}
 
       {loggedInUser && loggedInUser.user_id === pet.owner_id && !isEditing && (
         <>
-          <button onClick={() => setIsEditing(true)}>Update Pet Details</button>
-          <button onClick={handleDeletePet}>Delete Pet</button>
+          <button className="button button-secondary" onClick={() => setIsEditing(true)}>Update Pet Details</button>
+          <button className="button button-secondary" onClick={handleDeletePet}>Delete Pet</button>
         </>
       )}
       {isEditing && (
@@ -107,8 +107,8 @@ function PetDetail({ loggedInUser }) {
             required
             onChange={handleUpdateChange}
           />
-          <button type="submit">Submit</button>
-          <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
+          <button className="button button-secondary" type="submit">Submit</button>
+          <button className="button button-secondary" type="button" onClick={() => setIsEditing(false)}>Cancel</button>
         </form>
       )}
     </div>

@@ -74,8 +74,8 @@ function Home({ loggedInUser, setLoggedInUser }) {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)} />
-              <button className='task-button' type="submit">Login</button>
-              <button className='task-button' type="button" onClick={navigateToRegister}>Register</button>
+              <button className='button button-primary' type="submit">Login</button>
+              <button className='button button-primary' type="button" onClick={navigateToRegister}>Register</button>
             </form>
           )}
           {error && <div className="error-message">{error}</div>}
@@ -127,7 +127,7 @@ function Home({ loggedInUser, setLoggedInUser }) {
               <option value="Female">Female</option>
             </select>
 
-            <button className='task-button' onClick={handleSearch}>Search</button>
+            <button className='button button-secondary' onClick={handleSearch}>Search</button>
           </div>
         </div>
         <div className="pets-list">

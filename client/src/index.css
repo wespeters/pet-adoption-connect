@@ -85,9 +85,46 @@ main {
   margin-bottom: 20px;
 }
 
-button {
+/* Base button style */
+.button {
   cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  text-align: center;
+  transition: background 0.3s, transform 0.3s;
+  margin: 5px;
 }
+
+/* Primary button */
+.button-primary {
+  background: #5468ff;
+  color: #fff;
+}
+
+.button-primary:hover {
+  background: #3c4fe0;
+  transform: translateY(-2px);
+}
+
+/* Secondary button */
+.button-secondary {
+  background: #f3f4f6;
+  color: #2b6cb0;
+}
+
+.button-secondary:hover {
+  background: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+/* Disabled button */
+.button:disabled {
+  background: #c8c8c8;
+  cursor: not-allowed;
+}
+
 
 .dob-label {
   font-size: 0.8rem;
@@ -335,12 +372,30 @@ button {
 }
 
 .pet-card {
-  border: 1px solid #e0e0e0; 
-  padding: 10px; 
-  margin: 10px; 
-  border-radius: 5px; 
-  text-align: center; 
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add a shadow */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
 }
+
+.pet-card:hover {
+  transform: translateY(-5px); /* Lift the card on hover */
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+}
+
+.pet-card img {
+  border-radius: 5px;
+  margin-bottom: 10px; /* Space between image and text */
+}
+
+.pet-card h3 {
+  font-size: 1.2rem; /* Increase font size for pet name */
+  margin-bottom: 5px; /* Control spacing */
+}
+
 
 .pet-image {
   width: 150px;

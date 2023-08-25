@@ -70,7 +70,7 @@ function Search() {
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
-        <p><button className='task-button' onClick={handleSearch}>Search</button></p>
+        <p><button className="button button-secondary" onClick={handleSearch}>Search</button></p>
       </div>
       <h3>Search Results</h3>
       {searchResults.length > 0 ? (

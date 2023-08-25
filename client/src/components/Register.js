@@ -45,7 +45,7 @@ function Register() {
         </select>
         </p>
         <p><textarea name="contactinfo" rows="5" cols="50" placeholder="Contact Information" onChange={handleChange}></textarea></p>
-        <p><button className='task-button' type="submit">Register</button></p>
+        <p><button className="button button-secondary" type="submit">Register</button></p>
       </form>
       {error && <div className="error-message">{error}</div>}
     </div>

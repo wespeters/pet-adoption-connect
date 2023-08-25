@@ -90,7 +90,7 @@ function Messages({ loggedInUser }) {
 
   return (
     <div className="container">
-      <button onClick={handleCompose}>Compose a new message</button>
+      <button className="button button-secondary" onClick={handleCompose}>Compose a new message</button>
       {showCompose && (
         <div className="compose-container">
           <input
@@ -105,7 +105,7 @@ function Messages({ loggedInUser }) {
             onChange={(e) => setContent(e.target.value)}
             placeholder="Message Content"
           ></textarea>
-          <button onClick={() => sendMessage(recipient)}>Send</button>
+          <button className="button button-secondary" onClick={() => sendMessage(recipient)}>Send</button>
         </div>
       )}
 
@@ -115,8 +115,8 @@ function Messages({ loggedInUser }) {
           <div key={message.message_id} className="message">
             <p>From: {message.sender_username}</p>
             <p>{message.content}</p>
-            <button onClick={() => handleReply(message.sender_username)}>Reply</button>
-            <button onClick={() => handleDeleteMessage(message.message_id)}>Delete</button>
+            <button className="button button-secondary" onClick={() => handleReply(message.sender_username)}>Reply</button>
+            <button className="button button-secondary" onClick={() => handleDeleteMessage(message.message_id)}>Delete</button>
           </div>
         ))}
       </div>
