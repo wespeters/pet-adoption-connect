@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-
 :root {
   --bg: #f3f4f6; 
   --header: #2b6cb0; 
-  --link: #4299e1; 
+  --link: #ff5733;   
   --text: #4a5568; 
-  --font-family: 'Quicksand', sans-serif; 
+  --font-family: 'Quicksand', sans-serif;
+  --navbar-bg: #c8c8c8; 
 }
 
 [data-theme='dark'] {
-  --bg: #282c34;
+  --bg: #1f2029;     
   --header: #fff;
-  --link: #61dafb;
+  --link: #ff5733;   
   --text: hsla(0, 0%, 100%, 0.88);
-  --navbar-bg: #1a1a1a;
+  --navbar-bg: #15161c; 
   --navbar-link: #f0f0f0;
 }
 
@@ -343,10 +343,10 @@ button {
 }
 
 .pet-image {
-  width: 150px; /* Adjust as needed */
+  width: 150px;
   height: 150px;
-  object-fit: cover; /* This will preserve the aspect ratio */
-  border-radius: 5px; /* Optional: Add border-radius for rounded corners */
+  object-fit: cover; 
+  border-radius: 5px;
 }
 
 .pets-list {
@@ -378,3 +378,4 @@ textarea[name="medical_conditions"] {
 input[name="image_url"] {
   width: 100%;
 }
+

@@ -18,7 +18,6 @@ function ResourcesForAdopters() {
         <Link to={`/resources/${resource.resource_id}`} key={resource.resource_id} className="resource-item">
           <h3>{resource.title}</h3>
           <div dangerouslySetInnerHTML={{ __html: resource.content }}/>
-          <p><strong>Author:</strong> {resource.author}</p>
           <p><strong>Category:</strong> {resource.category}</p>
         </Link>
       ))}
