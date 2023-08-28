@@ -5,19 +5,30 @@
 
 Welcome to Pet Adoption Connect, your one-stop-shop where pet adopters can match with pet owners looking to rehome their furry friends. Our website is designed to make the process of adopting a pet as seamless and stress-free as possible.
 
+## Installation
+
+Use `pipenv install` to install the dependencies and create the environment to run the backend. `cd` into the `Server` folder and run `python app.py` to start the development server. The server will run on `http://127.0.0.1:5555`. 
+
+Use `npm install` to install the dependencies for the frontend. Run `npm start` to start the client. You can view the client in the browser on `http://localhost:3000`. 
+
 ## User Stories
 As a user, I want to be able to:
 
 - register and login as an adopter or pet owner.
-- search and filter through the available pets based on specific criteria, such as breed and location.
+- search and filter through the available pets based on specific criteria, such as species and breed.
 - use a messaging system that allows adopters to contact pet owners and vice versa.
--  if I am a pet owner, to add and update information about my pets, and provide a status update when a pet has been adopted.
-- make a reservation or appointment request to visit a pet.
+-  if I am a pet owner, add, update, and delete information about my pets, and provide a status update when a pet has been adopted.
 - view resources and information on pet adoption, including articles on how to prepare for a new pet, what to expect when adopting a pet, and tips for successful pet-parenting.
 
 Additionally, the website might also have a section for pet rescue organizations and shelters, where they can create profiles and list the pets they have available for adoption.
 
 ---
+
+## App Structure and Code
+
+### Frontend
+
+
 
 ## Entity Relationship Diagram
 

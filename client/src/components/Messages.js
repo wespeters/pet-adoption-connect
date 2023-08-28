@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 
@@ -8,6 +8,9 @@ function Messages({ loggedInUser }) {
   const [content, setContent] = useState("");
   const [recipient, setRecipient] = useState("");
   const [showCompose, setShowCompose] = useState(false);
+  
+  // Create a reference for the compose container
+  const composeContainerRef = useRef(null);
 
   const [searchParams] = useSearchParams();
   const recipientParam = searchParams.get("recipient");
@@ -39,7 +42,6 @@ function Messages({ loggedInUser }) {
       });
   };
 
-
   const sendMessage = async (recipientUsername) => {
     const receiverId = await getUserIdByUsername(recipientUsername);
     if (receiverId) {
@@ -67,8 +69,12 @@ function Messages({ loggedInUser }) {
   const handleReply = (sender) => {
     setRecipient(sender ? sender : "");
     setShowCompose(true);
+    if (composeContainerRef.current) {
+      composeContainerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.scrollTo(0, 0);
+    }
   };
-
+  
   if (!loggedInUser) {
     return <div>You must be logged in to use this feature.</div>;
   }
@@ -91,8 +97,9 @@ function Messages({ loggedInUser }) {
   return (
     <div className="container">
       <button className="button button-secondary" onClick={handleCompose}>Compose a new message</button>
+      {/* Attached the ref to this div */}
       {showCompose && (
-        <div className="compose-container">
+        <div className="compose-container" ref={composeContainerRef}>
           <input
             className="input" 
             type="text"
@@ -132,7 +139,6 @@ function Messages({ loggedInUser }) {
       </div>
     </div>
   );
-
 }
 
 export default Messages;

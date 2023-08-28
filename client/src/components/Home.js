@@ -83,8 +83,8 @@ function Home({ loggedInUser, setLoggedInUser }) {
           {error && <div className="error-message">{error}</div>}
         </div>
         <div className="intro-text">
-          <p>Find your perfect pet companion here!</p>
-          <p>We connect pet owners with potential adopters.</p>
+          <h3>Find your perfect pet companion here!</h3>
+          <h3>We connect pet owners with potential adopters.</h3>
         </div>
         <div className="search-pets">
           <h2>Search Available Pets</h2>

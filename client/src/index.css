@@ -1,22 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg: #f3f4f6; 
-  --header: #2b6cb0; 
-  --link: #ff5733;   
-  --text: #4a5568; 
+  --bg: #f1faee; 
+  --header: #457b9d; 
+  --link: #e63946;   
+  --text: #1d3557; 
   --font-family: 'Quicksand', sans-serif;
-  --navbar-bg: #c8c8c8; 
+  --navbar-bg: #a8dadc; 
 }
 
 [data-theme='dark'] {
-  --bg: #1f2029;     
-  --header: #fff;
+  --bg: #1D3557;     
+  --header: #F1FAEE;
   --link: #ff5733;   
-  --text: hsla(0, 0%, 100%, 0.88);
-  --navbar-bg: #15161c; 
-  --navbar-link: #f0f0f0;
+  --text: F1FAEE(0, 0%, 100%, 0.88);
+  --navbar-bg: #03045e; 
+  --navbar-link: #F1FAEE;
 }
+
+[data-theme='dark'] p {
+  color: #F1FAEE;
+}
+
 
 body {
   background-color: var(--bg);
@@ -99,23 +104,23 @@ main {
 }
 
 .button-primary {
-  background: #5468ff;
+  background: #457b9d;
   color: #fff;
 }
 
 .button-primary:hover {
-  background: #3c4fe0;
+  background: #0d1b2a;
   transform: translateY(-2px);
 }
 
 .button-secondary {
-  background: #f3f4f6;
-  color: #2b6cb0;
+  background: #a8dadc;
+  color: #1d3557;
   border-radius: 20px;
 }
 
 .button-secondary:hover {
-  background: #e0e0e0;
+  background: #457b9d;
   transform: translateY(-2px);
 }
 
@@ -194,23 +199,23 @@ main {
   margin: 10px;
   border-radius: 5px;
   text-align: center;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add a shadow */
-  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s; 
 }
 
 .pet-card:hover {
-  transform: translateY(-5px); /* Lift the card on hover */
-  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+  transform: translateY(-5px); 
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .pet-card img {
   border-radius: 5px;
-  margin-bottom: 10px; /* Space between image and text */
+  margin-bottom: 10px; 
 }
 
 .pet-card h3 {
-  font-size: 1.2rem; /* Increase font size for pet name */
-  margin-bottom: 5px; /* Control spacing */
+  font-size: 1.2rem; 
+  margin-bottom: 5px; 
 }
 
 

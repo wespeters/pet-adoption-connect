@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: flex-end;
     padding-right: 10px;
+    margin-bottom: 10px;
   }
   
   .switch {
@@ -54,5 +55,9 @@
   
   .slider.round:before {
     border-radius: 50%;
+  }
+  
+  .bright-text {
+    color: white;
   }
   

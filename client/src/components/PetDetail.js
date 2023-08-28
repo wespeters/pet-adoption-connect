@@ -65,13 +65,13 @@ function PetDetail({ loggedInUser }) {
       <div className="pet-detail">
         <img src={pet.image_url} alt={pet.petname} className="pet-image" />
         <h2>{pet.petname}</h2>
-        <p>Species: {pet.species}</p>
-        <p>Breed: {pet.breed}</p>
-        <p>Age: {pet.age}</p>
-        <p>Gender: {pet.gender}</p>
-        <p>Medical Conditions: {pet.medical_conditions}</p>
-        <p>Status: {pet.status}</p>
-        <p>Owner: {pet.owner_username || "Unknown"}</p>
+        <h4>Species: {pet.species}</h4>
+        <h4>Breed: {pet.breed}</h4>
+        <h4>Age: {pet.age}</h4>
+        <h4>Gender: {pet.gender}</h4>
+        <h4>Medical Conditions: {pet.medical_conditions}</h4>
+        <h4>Status: {pet.status}</h4>
+        <h4>Owner: {pet.owner_username || "Unknown"}</h4>
       </div>
       
       {loggedInUser && loggedInUser.role === "adopter" && (
