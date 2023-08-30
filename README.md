@@ -356,7 +356,218 @@ Manages CRUD operations for AppResource entities.
 
 ---
 
+### `Post.js`
 
+---
+
+#### Imports
+
+- `import React, { useState } from 'react';`
+  - Importing the React library and the `useState` hook for state management.
+  
+- `import axios from 'axios';`
+  - Importing the Axios library for making HTTP requests.
+  
+- `import { useNavigate } from 'react-router-dom';`
+  - Importing the `useNavigate` hook from `react-router-dom` for programmatically navigating routes.
+
+#### `function Post({ loggedInUser })`
+
+- A functional React component for creating a new pet post. It receives `loggedInUser` as a prop to identify the owner of the pet.
+
+##### `useState`
+
+- Initializes the `formValues` state variable with an object to hold the form input values.
+
+##### `handleChange(e)`
+
+- Event handler function for form input changes. Updates the `formValues` state.
+
+##### `useNavigate()`
+
+- Utilizes the `useNavigate` hook to get the `navigate` function, enabling programmatic navigation.
+
+##### `handleSubmit(e)`
+
+- Asynchronous event handler function for form submission. Sends a POST request to create a new pet and navigates to the new pet's page if successful.
+
+##### `return (...)`
+
+- The JSX to render the pet posting form. Uses form elements and buttons to collect data from the user.
+
+#### `export default Post;`
+
+- Exports the `Post` component for use in other parts of the application.
+
+---
+
+### `PetDetail.js`
+
+#### Imports
+
+- `import React, { useState, useEffect } from "react";`
+  - Imports the React library, along with the `useState` and `useEffect` hooks for state management and side-effects.
+
+- `import axios from "axios";`
+  - Imports the Axios library for making HTTP requests.
+
+- `import { useParams, useNavigate } from "react-router-dom";`
+  - Imports `useParams` and `useNavigate` hooks from `react-router-dom` for parameter extraction and navigation.
+
+#### `function PetDetail({ loggedInUser })`
+
+- A functional React component that displays details about a pet and provides options for updating or deleting the pet.
+
+##### `useState`
+
+- Initializes three state variables: `pet` for storing pet details, `isEditing` for toggling the editing mode, and `updateValues` for storing form updates.
+
+##### `useParams()`
+
+- Uses the `useParams` hook to extract the `id` parameter from the URL.
+
+##### `useEffect()`
+
+- A side-effect hook that fetches the pet details from the server when the component mounts or the `id` changes.
+
+##### `handleUpdateChange(e)`
+
+- An event handler for updating form fields. Modifies the `updateValues` state.
+
+##### `handleUpdateSubmit(e)`
+
+- An asynchronous function that handles the form submission for updating pet details.
+
+##### `useNavigate()`
+
+- Uses the `useNavigate` hook to get the `navigate` function for programmatic navigation.
+
+##### `handleDeletePet()`
+
+- An asynchronous function that deletes the pet if the user confirms the action.
+
+##### `handleSendMessageToOwner()`
+
+- A function to navigate to the message composing page to send a message to the pet owner.
+
+##### `return (...)`
+
+- The JSX code that renders the pet details and provides buttons for updating or deleting the pet.
+
+#### `export default PetDetail;`
+
+- Exports the `PetDetail` component for use in other parts of the application.
+
+---
+
+### `Search.js`
+
+#### Imports
+
+- `import React, { useState, useEffect } from "react";`
+  - Imports the React library along with the `useState` and `useEffect` hooks for state management and side-effects.
+  
+- `import { useLocation } from "react-router-dom";`
+  - Imports the `useLocation` hook from `react-router-dom` to access the current location object which contains information about the URL.
+  
+- `import axios from "axios";`
+  - Imports the Axios library for making HTTP requests.
+  
+- `import { Link } from "react-router-dom";`
+  - Imports the `Link` component from `react-router-dom` for client-side navigation.
+
+#### `function Search()`
+
+- A functional React component responsible for rendering a search form and displaying the search results for pets.
+
+##### `useLocation()`
+
+- Uses the `useLocation` hook to get the current URL location and extract query parameters.
+
+##### `useState`
+
+- Initializes two state variables: `searchResults` for storing the search results and `searchCriteria` for storing the search form's field values.
+
+##### `handleSearch()`
+
+- A function that updates the URL with the search parameters to trigger a new search.
+
+##### `useEffect()`
+
+- A side-effect hook that fires an Axios GET request to fetch the search results whenever the query string changes (`location.search`).
+
+##### `return (...)`
+
+- The JSX code that renders the search form and the list of pets that match the search criteria. It uses conditional rendering to display a message if no pets match the search criteria.
+
+#### `export default Search;`
+
+- Exports the `Search` component to be used in other parts of the application.
+
+---
+
+### `Messages.js` 
+
+#### Imports
+
+- `import React, { useState, useEffect, useRef } from "react";`
+  - Imports the React library, along with hooks for state management (`useState`), side-effects (`useEffect`), and accessing DOM nodes (`useRef`).
+
+- `import axios from "axios";`
+  - Imports the Axios library for making HTTP requests.
+
+- `import { useSearchParams } from "react-router-dom";`
+  - Imports `useSearchParams` from `react-router-dom` to access the query parameters from the current URL.
+
+#### `function Messages({ loggedInUser })`
+
+- A functional React component for rendering the messaging interface. It receives `loggedInUser` as a prop.
+
+##### `useState`
+
+- Initializes state variables for inbox messages (`inbox`), sent messages (`sentMessages`), the message content (`content`), the recipient (`recipient`), and a flag for showing the compose form (`showCompose`).
+
+##### `useRef`
+
+- Creates a reference (`composeContainerRef`) to the compose container, allowing for scroll behavior control.
+
+##### `useSearchParams`
+
+- Uses `useSearchParams` to extract the "recipient" query parameter if present in the URL.
+
+##### `useEffect`
+
+- A side-effect hook that fetches inbox and sent messages for the logged-in user. It also sets the recipient and shows the compose form if a recipient parameter exists.
+
+##### `getUserIdByUsername(username)`
+
+- A helper function to fetch a user's ID by their username.
+
+##### `sendMessage(recipientUsername)`
+
+- An asynchronous function to send a message to a recipient.
+
+##### `handleCompose()`
+
+- A function to set the `showCompose` state to `true`, thus showing the compose form.
+
+##### `handleReply(sender)`
+
+- A function to set the recipient to the sender's username and show the compose form.
+
+##### `handleDeleteMessage(messageId)`
+
+- A function to delete a message based on its ID.
+
+##### `return (...)`
+
+- The JSX that renders the compose form, inbox, and sent messages. It uses conditional rendering to show messages or other UI components based on the state.
+
+#### `export default Messages;`
+
+- Exports the `Messages` component to be used in other parts of the application.
+
+---
 
 ## License
 MIT License
