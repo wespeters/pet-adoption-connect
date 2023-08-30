@@ -197,7 +197,6 @@ class Messages(Resource):
 
     def post(self):
         data = request.get_json()
-        print("Received data:", data)
 
         required_keys = ['sender_id', 'receiver_id', 'content']
         for key in required_keys:

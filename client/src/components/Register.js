@@ -24,7 +24,6 @@ function Register() {
       const response = await axios.post("http://localhost:5555/users", formData);
       if (response.data) {
         navigate("/");
-        console.log("Registration successful:", response.data);
       }
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred. Please try again.");
